@@ -1,0 +1,7 @@
+{
+  "name": "social-front",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
