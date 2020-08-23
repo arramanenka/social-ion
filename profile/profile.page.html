@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>{{user.name}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col size-md="6" offset-md="3">
+                <ion-card>
+                    <ion-card-content>
+                        <ion-row>
+                            <ion-col>
+                                <ion-avatar><img src="{{user.avatarUrl}}" alt="avatar"></ion-avatar>
+                            </ion-col>
+                            <ion-col>
+                                <ion-row>{{user.followerAmount}}</ion-row>
+                                <ion-row>followers</ion-row>
+                            </ion-col>
+                            <ion-col>
+                                <ion-row>{{user.followingAmount}}</ion-row>
+                                <ion-row>following</ion-row>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-text class="user-bio">{{user.bio}}</ion-text>
+                        </ion-row>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
