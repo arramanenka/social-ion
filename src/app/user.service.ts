@@ -6,15 +6,15 @@ import {User} from '../model/user';
     providedIn: 'root'
 })
 export class UserService {
-    queriedUser: Subject<User> = new Subject<User>();
 
     constructor() {
     }
 
-    queryUser(uid: string) {
+    queryUser(uid: string, action: (value: User) => void): void {
+        const queriedUser: Subject<User> = new Subject<User>();
+        queriedUser.subscribe(action);
         // mock for now instead of sending http request
-
-        this.queriedUser.next(
+        queriedUser.next(
             {
                 id: uid,
                 name: uid,

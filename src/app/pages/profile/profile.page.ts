@@ -21,16 +21,14 @@ export class ProfilePage implements OnInit {
     }
 
     ngOnInit() {
-        this.userService.queriedUser.subscribe(user => {
-            this.user = user;
-        });
         this.activatedRoute.paramMap.subscribe(value => {
             let uid = value.get('uid');
             if (!uid) {
                 uid = this.identityService.getSelfId();
             }
-            console.log(uid);
-            this.userService.queryUser(uid);
+            this.userService.queryUser(uid, user => {
+                this.user = user;
+            });
         });
     }
 
