@@ -6,12 +6,11 @@ import {ProfilePage} from './profile.page';
 const routes: Routes = [
     {
         path: '',
-        component: ProfilePage,
-        children: [
-            {
-                path: ':uid'
-            }
-        ]
+        component: ProfilePage
+    },
+    {
+        path: ':uid',
+        component: ProfilePage
     }
 ];
 

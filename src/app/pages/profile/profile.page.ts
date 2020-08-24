@@ -25,7 +25,6 @@ export class ProfilePage implements OnInit {
             this.user = user;
         });
         this.activatedRoute.paramMap.subscribe(value => {
-            console.log(value);
             let uid = value.get('uid');
             if (!uid) {
                 uid = this.identityService.getSelfId();
