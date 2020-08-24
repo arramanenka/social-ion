@@ -1,20 +1,21 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular';
+import {IonicModule} from '@ionic/angular';
 
-import { InboxPageRoutingModule } from './inbox-routing.module';
+import {InboxPageRoutingModule} from './inbox-routing.module';
 
-import { InboxPage } from './inbox.page';
+import {InboxPage} from './inbox.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    InboxPageRoutingModule
-  ],
-  declarations: [InboxPage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        InboxPageRoutingModule
+    ],
+    declarations: [InboxPage]
 })
-export class InboxPageModule {}
+export class InboxPageModule {
+}
