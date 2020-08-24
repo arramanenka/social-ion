@@ -9,6 +9,6 @@ export class IdentityService {
     }
 
     getSelfId() {
-        return '0';
+        return 'self';
     }
 }
