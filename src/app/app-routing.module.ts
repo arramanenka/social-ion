@@ -4,12 +4,16 @@ import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'profile',
+        redirectTo: 'inbox',
         pathMatch: 'full'
     },
     {
         path: 'profile',
         loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule),
+    },
+    {
+        path: 'inbox',
+        loadChildren: () => import('./pages/inbox/inbox.module').then(m => m.InboxPageModule)
     },
 ];
 
