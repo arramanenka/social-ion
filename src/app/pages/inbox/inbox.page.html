@@ -7,6 +7,27 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <ion-nav root="inbox-root"></ion-nav>
+<ion-content [fullscreen]="true">
+    <ion-grid>
+        <ion-row>
+            <ion-col size-md="6" offset-md="3">
+                <ion-list class="ion-no-padding">
+                    <ion-item *ngFor="let chat of chats">
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size="3" offset="1">
+                                    <ion-avatar>
+                                        <ion-img [src]="chat.user.avatarUrl"></ion-img>
+                                    </ion-avatar>
+                                </ion-col>
+                                <ion-col size="7" class="ion-text-center ion-text-justify">
+                                    {{chat.user.name}}
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-item>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>

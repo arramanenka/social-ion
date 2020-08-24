@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../../../model/user';
-import {IdentityService} from '../../identity.service';
-import {UserService} from '../../user.service';
+import {UserService} from '../../service/user.service';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -14,7 +13,6 @@ export class ProfilePage implements OnInit {
     user: User;
 
     constructor(
-        private identityService: IdentityService,
         private userService: UserService,
         private activatedRoute: ActivatedRoute
     ) {
@@ -22,11 +20,14 @@ export class ProfilePage implements OnInit {
 
     ngOnInit() {
         this.activatedRoute.paramMap.subscribe(value => {
-            let uid = value.get('uid');
-            if (!uid) {
-                uid = this.identityService.getSelfId();
+            const uid = value.get('uid');
+            if (uid) {
+                this.userService.queryUser(uid, user => {
+                    this.user = user;
+                });
+                return;
             }
-            this.userService.queryUser(uid, user => {
+            this.userService.querySelf(user => {
                 this.user = user;
             });
         });

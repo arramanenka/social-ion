@@ -1,13 +1,18 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
-import {User} from '../model/user';
+import {User} from '../../model/user';
+import {IdentityService} from './identity.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
 
-    constructor() {
+    constructor(private identityService: IdentityService) {
+    }
+
+    querySelf(action: (value: User) => void): void {
+        this.queryUser(this.identityService.getSelfId(), action);
     }
 
     queryUser(uid: string, action: (value: User) => void): void {

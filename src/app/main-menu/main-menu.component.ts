@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IdentityService} from '../identity.service';
-import {UserService} from '../user.service';
+import {UserService} from '../service/user.service';
 import {User} from '../../model/user';
 
 @Component({
@@ -14,12 +13,11 @@ export class MainMenuComponent implements OnInit {
     contentId: string;
     user: User;
 
-    constructor(private identityService: IdentityService, private userService: UserService) {
+    constructor(private userService: UserService) {
     }
 
     ngOnInit() {
-        const selfId = this.identityService.getSelfId();
-        this.userService.queryUser(selfId, user => {
+        this.userService.querySelf(user => {
             this.user = user;
         });
     }

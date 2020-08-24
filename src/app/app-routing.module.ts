@@ -15,6 +15,10 @@ const routes: Routes = [
         path: 'inbox',
         loadChildren: () => import('./pages/inbox/inbox.module').then(m => m.InboxPageModule)
     },
+    {
+        path: 'chat',
+        loadChildren: () => import('./pages/chat/chat.module').then(m => m.ChatPageModule)
+    },
 ];
 
 @NgModule({
