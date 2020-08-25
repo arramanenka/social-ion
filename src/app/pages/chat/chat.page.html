@@ -7,7 +7,7 @@
             <ion-grid>
                 <ion-row class="ion-justify-content-start">
                     <ion-col>
-                        <ion-avatar>
+                        <ion-avatar [routerLink]="'/profile/'+ chat.user.id">
                             <ion-img [src]="chat.user.avatarUrl"></ion-img>
                         </ion-avatar>
                     </ion-col>
