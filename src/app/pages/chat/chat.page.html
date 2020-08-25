@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title class="ion-no-padding">
+            <ion-grid>
+                <ion-row class="ion-justify-content-end">
+                    <ion-col size="auto">
+                        {{chat.user.name}}
+                    </ion-col>
+                    <ion-col size="auto">
+                        <ion-avatar>
+                            <ion-img [src]="chat.user.avatarUrl"></ion-img>
+                        </ion-avatar>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+</ion-content>

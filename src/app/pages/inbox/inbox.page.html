@@ -10,17 +10,17 @@
 <ion-content [fullscreen]="true">
     <ion-grid>
         <ion-row>
-            <ion-col size-md="6" offset-md="3">
+            <ion-col size-md="4" offset-md="4">
                 <ion-list class="ion-no-padding">
-                    <ion-item *ngFor="let chat of chats">
+                    <ion-item *ngFor="let chat of chats" routerLink="/chat/{{chat.user.id}}">
                         <ion-grid>
                             <ion-row>
-                                <ion-col size="3" offset="1">
+                                <ion-col size="3">
                                     <ion-avatar>
                                         <ion-img [src]="chat.user.avatarUrl"></ion-img>
                                     </ion-avatar>
                                 </ion-col>
-                                <ion-col size="7" class="ion-text-center ion-text-justify">
+                                <ion-col size="9" class="ion-text-center ion-text-justify">
                                     {{chat.user.name}}
                                 </ion-col>
                             </ion-row>
