@@ -1,0 +1,18 @@
+<ion-row *ngIf="message.senderId===viewerId" class="ion-justify-content-end">
+    <ion-col class="viewers-message" size-md="6" size-sm="8" size-xs="10">
+        <span>{{message.text}}</span>
+        <div class="ion-text-right" >
+            {{message.createdAt | date:'short'}}
+        </div>
+    </ion-col>
+</ion-row>
+<ion-row *ngIf="message.senderId!==viewerId" class="ion-justify-content-start">
+    <ion-col class="others-message" size-md="6" size-sm="8" size-xs="10">
+        <span>{{message.text}}</span>
+        <div class="ion-text-right">
+            {{message.createdAt | date:'short'}}
+        </div>
+    </ion-col>
+</ion-row>
+<br>
+

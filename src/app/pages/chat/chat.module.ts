@@ -8,6 +8,7 @@ import {ChatPageRoutingModule} from './chat-routing.module';
 
 import {ChatPage} from './chat.page';
 import {AutosizeModule} from 'ngx-autosize';
+import {MessageComponent} from './message/message.component';
 
 @NgModule({
     imports: [
@@ -17,7 +18,7 @@ import {AutosizeModule} from 'ngx-autosize';
         ChatPageRoutingModule,
         AutosizeModule
     ],
-    declarations: [ChatPage]
+    declarations: [ChatPage, MessageComponent]
 })
 export class ChatPageModule {
 }

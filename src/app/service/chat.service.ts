@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Chat} from '../../model/chat';
 import {IdentityService} from './identity.service';
 import {Subject} from 'rxjs';
+import {Message} from '../../model/message';
 
 @Injectable({
     providedIn: 'root'
@@ -49,5 +50,22 @@ export class ChatService {
                 lastMessageTime: new Date()
             }
         );
+    }
+
+    queryChatMessages(uid: string, onNewMessage: (message) => void) {
+        const subj = new Subject<Message>();
+        subj.subscribe(onNewMessage);
+        subj.next({
+            text: 'aa',
+            createdAt: new Date(),
+            messageId: '1',
+            senderId: this.identityService.getSelfId()
+        });
+        subj.next({
+            text: 'aa',
+            createdAt: new Date(),
+            messageId: '2',
+            senderId: uid
+        });
     }
 }
