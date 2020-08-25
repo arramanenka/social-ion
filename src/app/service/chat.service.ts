@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Chat} from '../../model/Chat';
+import {Chat} from '../../model/chat';
 import {IdentityService} from './identity.service';
 import {Subject} from 'rxjs';
 
