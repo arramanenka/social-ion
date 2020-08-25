@@ -8,10 +8,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <ion-grid>
-        <ion-row>
-            <ion-col size-md="4" offset-md="4">
-                <ion-list class="ion-no-padding">
+    <ion-grid class="full-height">
+        <ion-row class="full-height">
+            <ion-col size-md="4" offset-md="4" class="full-height">
+                <ion-list class="ion-no-padding full-height">
                     <ion-item *ngFor="let chat of chats" routerLink="/chat/{{chat.user.id}}">
                         <ion-grid>
                             <ion-row>
