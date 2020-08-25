@@ -3,15 +3,15 @@
         <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title class="ion-no-padding">
+        <ion-title>
             <ion-grid>
-                <ion-row>
-                    <ion-col size="auto">
+                <ion-row class="ion-justify-content-start">
+                    <ion-col>
                         <ion-avatar>
                             <ion-img [src]="chat.user.avatarUrl"></ion-img>
                         </ion-avatar>
                     </ion-col>
-                    <ion-col size="auto">
+                    <ion-col>
                         {{chat.user.name}}
                     </ion-col>
                 </ion-row>
@@ -22,17 +22,27 @@
 
 <ion-content>
     <ion-grid class="full-height">
-        <ion-row class="messages-container">
+        <ion-row class="full-height">
             <ion-col size-md="8" offset-md="2" class="full-height">
                 <ion-list class="full-height">
                     <!--messages here-->
                 </ion-list>
             </ion-col>
         </ion-row>
-        <ion-row class="input-area">
-            <ion-col size-md="6" offset="3" class="full-height">
-
-            </ion-col>
-        </ion-row>
     </ion-grid>
 </ion-content>
+
+<ion-footer>
+    <ion-toolbar color="none">
+        <ion-row class="input-area">
+            <ion-col size-md="7" offset-md="2" size="10" class="full-height">
+                <ion-textarea autosize maxRows="8"></ion-textarea>
+            </ion-col>
+            <ion-col size-md="1" size="2">
+                <ion-button fill="clear" class="full-height" style="width: 100%">
+                    <ion-icon slot="icon-only" name="send-outline"></ion-icon>
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-toolbar>
+</ion-footer>
