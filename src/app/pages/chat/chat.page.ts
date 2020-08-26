@@ -29,11 +29,14 @@ export class ChatPage implements OnInit {
             const uid = value.get('uid');
             this.chatService.queryChat(uid, chat => {
                 this.chat = chat;
-                this.chatService.queryChatMessages(chat.user.id, message => {
-                    this.messages.push(message);
-                });
+                this.loadPrevious();
             });
         });
     }
 
+    loadPrevious() {
+        this.chatService.queryReadChatMessages(this.chat.user.id, this.messages[0], message => {
+            this.messages.unshift(message);
+        });
+    }
 }

@@ -52,19 +52,26 @@ export class ChatService {
         );
     }
 
-    queryChatMessages(uid: string, onNewMessage: (message) => void) {
+    queryReadChatMessages(uid: string, topMessage: Message, onNewMessage: (message) => void) {
         const subj = new Subject<Message>();
         subj.subscribe(onNewMessage);
+        let prevMessageDate = new Date();
+        let prevMessageId = '0';
+        if (topMessage) {
+            prevMessageDate = new Date(topMessage.createdAt);
+            prevMessageDate.setDate(prevMessageDate.getDate() - 1);
+            prevMessageId = topMessage.messageId;
+        }
         subj.next({
             text: 'aa',
-            createdAt: new Date(),
-            messageId: '1',
+            createdAt: prevMessageDate,
+            messageId: prevMessageId + '1',
             senderId: this.identityService.getSelfId()
         });
         subj.next({
             text: 'aa',
-            createdAt: new Date(),
-            messageId: '2',
+            createdAt: prevMessageDate,
+            messageId: prevMessageId + '2',
             senderId: uid
         });
     }
