@@ -2,6 +2,9 @@
 .viewers-message, .others-message {
   white-space: pre-wrap;
   border-radius: 10px;
+  width: fit-content;
+  max-width: 100%;
+  height: fit-content;
 }
 
 .viewers-message {
