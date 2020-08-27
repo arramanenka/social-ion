@@ -24,10 +24,11 @@
     <ion-grid class="full-height">
         <ion-row class="full-height">
             <ion-col size-md="6" offset-md="3" class="full-height">
-                <ion-grid class="full-height">
-                    <app-message *ngFor="let message of messages" [message]="message"
-                                 [viewerId]="viewerId"></app-message>
-                </ion-grid>
+                <ion-list class="full-height message-container" lines="none">
+                    <ion-item *ngFor="let message of messages">
+                        <app-message [message]="message" [viewerId]="viewerId"></app-message>
+                    </ion-item>
+                </ion-list>
             </ion-col>
         </ion-row>
     </ion-grid>

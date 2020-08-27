@@ -29,11 +29,12 @@ export class ChatPage implements OnInit {
             const uid = value.get('uid');
             this.chatService.queryChat(uid, chat => {
                 this.chat = chat;
-                this.loadPrevious();
-                this.loadPrevious();
-                this.loadPrevious();
-                this.loadPrevious();
-                this.loadPrevious();
+                setTimeout(() => this.loadPrevious(), 1000);
+                setTimeout(() => this.loadPrevious(), 6000);
+                setTimeout(() => this.loadPrevious(), 9000);
+                setTimeout(() => this.loadPrevious(), 12000);
+                setTimeout(() => this.loadPrevious(), 15000);
+                setTimeout(() => this.loadPrevious(), 18000);
             });
         });
     }
