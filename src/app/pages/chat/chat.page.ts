@@ -13,7 +13,7 @@ import {IdentityService} from '../../service/identity.service';
 export class ChatPage implements OnInit {
 
     chat: Chat;
-    messages: Message[] = [];
+    messages: MessageView[] = [];
     viewerId: string;
 
     constructor(
@@ -30,13 +30,30 @@ export class ChatPage implements OnInit {
             this.chatService.queryChat(uid, chat => {
                 this.chat = chat;
                 this.loadPrevious();
+                this.loadPrevious();
+                this.loadPrevious();
+                this.loadPrevious();
+                this.loadPrevious();
             });
         });
     }
 
     loadPrevious() {
-        this.chatService.queryReadChatMessages(this.chat.user.id, this.messages[0], message => {
-            this.messages.unshift(message);
+        const topMessage: Message = this.messages[0];
+        this.chatService.queryReadChatMessages(this.chat.user.id, topMessage, message => {
+            const messageView = {
+                ...message,
+                displayDate: topMessage && topMessage.createdAt > message.createdAt ? topMessage.createdAt : null
+            };
+            console.log(messageView);
+            this.messages.unshift(messageView);
         });
     }
+}
+
+export interface MessageView extends Message {
+    /**
+     * additional date to be displayed after given message
+     */
+    displayDate: Date;
 }

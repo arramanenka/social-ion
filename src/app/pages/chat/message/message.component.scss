@@ -14,3 +14,18 @@
 .others-message {
   background: var(--ion-color-tertiary);
 }
+
+.display-date {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.date-view {
+  border-radius: 10px;
+  background: var(--ion-color-light);
+}
+
+.date-view * {
+  padding: 10px;
+}

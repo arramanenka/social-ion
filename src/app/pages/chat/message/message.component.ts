@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Message} from '../../../../model/message';
+import {MessageView} from '../chat.page';
 
 @Component({
     selector: 'app-message',
@@ -9,7 +10,7 @@ import {Message} from '../../../../model/message';
 export class MessageComponent implements OnInit {
 
     @Input()
-    message: Message;
+    message: MessageView;
     @Input()
     viewerId: string;
 

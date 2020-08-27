@@ -20,4 +20,11 @@
         </div>
     </ion-col>
 </ion-row>
+<div *ngIf="message.displayDate" class="display-date">
+    <div class="date-view">
+        <span>
+        {{message.displayDate | date: 'shortDate'}}
+        </span>
+    </div>
+</div>
 

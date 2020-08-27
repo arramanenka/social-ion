@@ -37,7 +37,7 @@ export class ChatService {
         ]);
     }
 
-    queryChat(uid: string, action: (chat) => void) {
+    queryChat(uid: string, action: (chat: Chat) => void) {
         const subj = new Subject<Chat>();
         subj.subscribe(action);
         subj.next(
@@ -52,7 +52,7 @@ export class ChatService {
         );
     }
 
-    queryReadChatMessages(uid: string, topMessage: Message, onNewMessage: (message) => void) {
+    queryReadChatMessages(uid: string, topMessage: Message, onNewMessage: (message: Message) => void) {
         const subj = new Subject<Message>();
         subj.subscribe(onNewMessage);
         let prevMessageDate = new Date();
