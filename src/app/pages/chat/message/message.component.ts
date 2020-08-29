@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Message} from '../../../../model/message';
-import {MessageView} from '../chat.page';
+import {Either} from '../chat.page';
 
 @Component({
     selector: 'app-message',
@@ -10,7 +10,7 @@ import {MessageView} from '../chat.page';
 export class MessageComponent implements OnInit {
 
     @Input()
-    message: MessageView;
+    chatContent: Either<Message, Date>;
     @Input()
     viewerId: string;
 

@@ -1,31 +1,31 @@
-<ion-grid>
-    <ion-row *ngIf="message.senderId===viewerId" class="ion-justify-content-end">
+<ion-grid *ngIf="chatContent.isLeft()">
+    <ion-row *ngIf="chatContent.left.senderId===viewerId" class="ion-justify-content-end">
         <ion-col size-md="6" size-sm="8" size-xs="10" class="ion-justify-content-end">
             <div style="width: 100%; display: flex; justify-content: flex-end">
                 <div class="viewers-message ion-padding">
-                    <span>{{message.text}}</span>
+                    <span>{{chatContent.left.text}}</span>
                     <div class="ion-text-right">
-                        {{message.createdAt | date:'shortTime'}}
+                        {{chatContent.left.createdAt | date:'shortTime'}}
                     </div>
                 </div>
             </div>
         </ion-col>
     </ion-row>
-    <ion-row *ngIf="message.senderId!==viewerId" class="ion-justify-content-start">
+    <ion-row *ngIf="chatContent.left.senderId!==viewerId" class="ion-justify-content-start">
         <ion-col size-md="6" size-sm="8" size-xs="10">
             <div class="others-message  ion-padding ion-no-margin">
-                <span>{{message.text}}</span>
+                <span>{{chatContent.left.text}}</span>
                 <div class="ion-text-right">
-                    {{message.createdAt | date:'shortTime'}}
+                    {{chatContent.left.createdAt | date:'shortTime'}}
                 </div>
             </div>
         </ion-col>
     </ion-row>
 </ion-grid>
-<div *ngIf="message.displayDate" class="display-date">
+<div *ngIf="chatContent.isRight()" class="display-date">
     <div class="date-view">
         <span>
-        {{message.displayDate | date: 'shortDate'}}
+        {{chatContent.right | date: 'shortDate'}}
         </span>
     </div>
 </div>
