@@ -22,6 +22,10 @@
     <ion-grid class="full-height">
         <ion-row class="full-height">
             <ion-col size-md="6" offset-md="3" class="full-height">
+                <ion-infinite-scroll position="top" threshold="100px" (ionInfinite)="loadPrevious($event)">
+                    <ion-infinite-scroll-content loadingSpinner="bubbles">
+                    </ion-infinite-scroll-content>
+                </ion-infinite-scroll>
                 <ion-list class="full-height message-container" lines="none">
                     <ion-item *ngFor="let message of messages">
                         <app-message [chatContent]="message" [viewerId]="viewerId"></app-message>

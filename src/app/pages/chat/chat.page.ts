@@ -1,20 +1,24 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ChatService} from '../../service/chat.service';
 import {ActivatedRoute} from '@angular/router';
 import {Chat} from '../../../model/chat';
 import {Message} from '../../../model/message';
 import {IdentityService} from '../../service/identity.service';
+import {IonInfiniteScroll} from '@ionic/angular';
 
 @Component({
     selector: 'app-chat',
     templateUrl: './chat.page.html',
     styleUrls: ['./chat.page.scss'],
 })
-export class ChatPage implements OnInit {
+export class ChatPage implements OnInit, AfterViewInit {
 
     chat: Chat;
     messages: Either<Message, Date>[] = [];
     viewerId: string;
+
+    @ViewChild(IonInfiniteScroll)
+    ionInfiniteScroll: IonInfiniteScroll;
 
     constructor(
         private chatService: ChatService,
@@ -29,26 +33,29 @@ export class ChatPage implements OnInit {
             const uid = value.get('uid');
             this.chatService.queryChat(uid, chat => {
                 this.chat = chat;
-                setTimeout(() => this.loadPrevious(), 1000);
-                setTimeout(() => this.loadPrevious(), 1000);
-                setTimeout(() => this.loadPrevious(), 1000);
-                // setTimeout(() => this.loadPrevious(), 1000);
-                // setTimeout(() => this.loadPrevious(), 1000);
-                // setTimeout(() => this.loadPrevious(), 1000);
-                // setTimeout(() => this.loadPrevious(), 6000);
-                // setTimeout(() => this.loadPrevious(), 9000);
-                // setTimeout(() => this.loadPrevious(), 12000);
-                // setTimeout(() => this.loadPrevious(), 15000);
-                // setTimeout(() => this.loadPrevious(), 18000);
             });
         });
+        this.loadPrevious(null);
     }
 
-    loadPrevious() {
+    ngAfterViewInit(): void {
+        this.ionInfiniteScroll.disabled = true;
+    }
+
+
+    loadPrevious(event) {
         // for now we are sure that messages array is either empty or has date on top
         const topMessageView = this.messages.find(m => m.isLeft());
         const topMessage = topMessageView ? topMessageView.left : null;
-        this.chatService.queryReadChatMessages(this.chat.user.id, topMessage, value => this.appendMessage(value));
+        this.chatService.queryReadChatMessages(
+            this.chat.user.id, topMessage,
+            value => this.appendMessage(value),
+            () => {
+                if (event) {
+                    event.target.complete();
+                }
+            }
+        );
     }
 
     appendMessage(value: Message) {
