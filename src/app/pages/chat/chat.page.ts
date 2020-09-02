@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Chat} from '../../../model/chat';
 import {Message} from '../../../model/message';
 import {IdentityService} from '../../service/identity.service';
-import {IonInfiniteScroll} from '@ionic/angular';
+import {IonContent} from '@ionic/angular';
 
 @Component({
     selector: 'app-chat',
@@ -17,8 +17,8 @@ export class ChatPage implements OnInit, AfterViewInit {
     messages: Either<Message, Date>[] = [];
     viewerId: string;
 
-    @ViewChild(IonInfiniteScroll)
-    ionInfiniteScroll: IonInfiniteScroll;
+    @ViewChild(IonContent)
+    content: IonContent;
 
     constructor(
         private chatService: ChatService,
@@ -39,7 +39,6 @@ export class ChatPage implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.ionInfiniteScroll.disabled = true;
     }
 
 

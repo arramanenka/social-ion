@@ -66,18 +66,20 @@ export class ChatService {
             prevMessageDate.setDate(prevMessageDate.getDate() - 1);
             prevMessageId = topMessage.messageId;
         }
-        subj.next({
-            text: 'aa',
-            createdAt: prevMessageDate,
-            messageId: prevMessageId + '1',
-            senderId: this.identityService.getSelfId()
-        });
-        subj.next({
-            text: 'aa',
-            createdAt: prevMessageDate,
-            messageId: prevMessageId + '2',
-            senderId: uid
-        });
-        onFinish();
+        setTimeout(() => {
+            subj.next({
+                text: 'aa',
+                createdAt: prevMessageDate,
+                messageId: prevMessageId + '1',
+                senderId: this.identityService.getSelfId()
+            });
+            subj.next({
+                text: 'aa',
+                createdAt: prevMessageDate,
+                messageId: prevMessageId + '2',
+                senderId: uid
+            });
+            onFinish();
+        }, 500);
     }
 }
