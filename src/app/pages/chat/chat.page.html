@@ -22,7 +22,7 @@
     <ion-grid class="full-height">
         <ion-row class="full-height">
             <ion-col size-md="6" offset-md="3" class="full-height">
-                <ion-infinite-scroll position="top" threshold="100px" (ionInfinite)="loadPrevious($event)">
+                <ion-infinite-scroll position="top" disabled="true" (ionInfinite)="loadPrevious($event)">
                     <ion-infinite-scroll-content loadingSpinner="bubbles">
                     </ion-infinite-scroll-content>
                 </ion-infinite-scroll>

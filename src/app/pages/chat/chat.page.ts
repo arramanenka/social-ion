@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Chat} from '../../../model/chat';
 import {Message} from '../../../model/message';
 import {IdentityService} from '../../service/identity.service';
-import {IonContent} from '@ionic/angular';
+import {IonContent, IonInfiniteScroll} from '@ionic/angular';
 
 @Component({
     selector: 'app-chat',
@@ -19,6 +19,9 @@ export class ChatPage implements OnInit, AfterViewInit {
 
     @ViewChild(IonContent)
     content: IonContent;
+
+    @ViewChild(IonInfiniteScroll)
+    ionScroll: IonInfiniteScroll;
 
     constructor(
         private chatService: ChatService,
@@ -35,14 +38,16 @@ export class ChatPage implements OnInit, AfterViewInit {
                 this.chat = chat;
             });
         });
-        this.loadPrevious(null);
+        this.loadPrevious(null, () => {
+            this.ionScroll.disabled = false;
+        });
     }
 
     ngAfterViewInit(): void {
     }
 
 
-    loadPrevious(event) {
+    loadPrevious(event, onLoaded?: () => void) {
         // for now we are sure that messages array is either empty or has date on top
         const topMessageView = this.messages.find(m => m.isLeft());
         const topMessage = topMessageView ? topMessageView.left : null;
@@ -50,6 +55,9 @@ export class ChatPage implements OnInit, AfterViewInit {
             this.chat.user.id, topMessage,
             value => this.appendMessage(value),
             () => {
+                if (onLoaded) {
+                    onLoaded();
+                }
                 if (event) {
                     event.target.complete();
                 }
@@ -62,6 +70,7 @@ export class ChatPage implements OnInit, AfterViewInit {
         const topMessageView = this.messages.find(m => m.isLeft());
         const topMessage = topMessageView ? topMessageView.left : null;
         const newDate = value.createdAt;
+        const shouldScrollToBottom = false;
         if (topMessage) {
             const dateMark = this.messages[0];
             if (dateMark.isRight()) {
@@ -76,6 +85,9 @@ export class ChatPage implements OnInit, AfterViewInit {
         }
         this.messages.unshift(new Either<Message, Date>(value));
         this.messages.unshift(new Either<Message, Date>(null, newDate));
+        if (shouldScrollToBottom) {
+            this.content.scrollToBottom().then();
+        }
     }
 }
 
