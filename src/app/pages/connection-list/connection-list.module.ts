@@ -7,13 +7,15 @@ import {IonicModule} from '@ionic/angular';
 import {ConnectionListPageRoutingModule} from './connection-list-routing.module';
 
 import {ConnectionListPage} from './connection-list.page';
+import {CommonComponentModule} from '../../components/common-component.module';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        ConnectionListPageRoutingModule
+        ConnectionListPageRoutingModule,
+        CommonComponentModule
     ],
     declarations: [ConnectionListPage]
 })

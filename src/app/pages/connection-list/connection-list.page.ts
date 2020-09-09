@@ -10,19 +10,22 @@ import {User} from '../../../model/user';
 })
 export class ConnectionListPage implements OnInit {
 
-    private connectionType: string;
+    private ownerId: string;
+    connectionType: string;
     connectedUsers: User[] = [];
 
     constructor(private activatedRoute: ActivatedRoute, private userService: UserService) {
     }
 
     ngOnInit() {
+        console.log('init');
         this.activatedRoute.paramMap.subscribe(value => {
+            console.log(value);
             this.connectionType = value.get('type');
-            const ownerId = value.get('uid');
-            this.userService.queryConnectedUsers(ownerId, this.connectionType, u => {
-                this.connectedUsers.push(u);
-            });
+            this.ownerId = value.get('uid');
+        });
+        this.userService.queryConnectedUsers(this.ownerId, this.connectionType, u => {
+            this.connectedUsers.push(u);
         });
     }
 
