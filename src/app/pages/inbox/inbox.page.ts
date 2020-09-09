@@ -22,4 +22,7 @@ export class InboxPage implements OnInit {
         });
     }
 
+    stopPropagation(event: Event) {
+        event.stopPropagation();
+    }
 }
