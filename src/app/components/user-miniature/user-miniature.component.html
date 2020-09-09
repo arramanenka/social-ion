@@ -1,0 +1,12 @@
+<ion-grid>
+    <ion-row>
+        <ion-col>
+            <ion-avatar routerLink="/profile/{{user.id}}">
+                <ion-img [src]="user.avatarUrl"></ion-img>
+            </ion-avatar>
+        </ion-col>
+        <ion-col>
+            <ion-text>{{user.name}}</ion-text>
+        </ion-col>
+    </ion-row>
+</ion-grid>
