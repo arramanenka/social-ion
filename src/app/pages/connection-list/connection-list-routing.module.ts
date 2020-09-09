@@ -5,7 +5,7 @@ import {ConnectionListPage} from './connection-list.page';
 
 const routes: Routes = [
     {
-        path: ':type',
+        path: ':uid/:type',
         component: ConnectionListPage
     }
 ];

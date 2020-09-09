@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {UserService} from '../../service/user.service';
 import {User} from '../../../model/user';
 
 @Component({
@@ -10,18 +11,18 @@ import {User} from '../../../model/user';
 export class ConnectionListPage implements OnInit {
 
     private connectionType: string;
-    private ownerId: string;
+    connectedUsers: User[] = [];
 
-
-    constructor(private activatedRoute: ActivatedRoute) {
+    constructor(private activatedRoute: ActivatedRoute, private userService: UserService) {
     }
 
     ngOnInit() {
         this.activatedRoute.paramMap.subscribe(value => {
             this.connectionType = value.get('type');
-        });
-        this.activatedRoute.queryParams.subscribe(params => {
-            this.ownerId = params.id;
+            const ownerId = value.get('uid');
+            this.userService.queryConnectedUsers(ownerId, this.connectionType, u => {
+                this.connectedUsers.push(u);
+            });
         });
     }
 
