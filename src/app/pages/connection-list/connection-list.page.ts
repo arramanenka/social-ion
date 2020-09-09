@@ -18,9 +18,7 @@ export class ConnectionListPage implements OnInit {
     }
 
     ngOnInit() {
-        console.log('init');
         this.activatedRoute.paramMap.subscribe(value => {
-            console.log(value);
             this.connectionType = value.get('type');
             this.ownerId = value.get('uid');
         });
