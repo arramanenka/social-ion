@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
-import {User} from '../../model/user';
+import {User, UserMetaInf} from '../../model/user';
 import {IdentityService} from './identity.service';
 
 @Injectable({
@@ -11,14 +11,15 @@ export class UserService {
     constructor(private identityService: IdentityService) {
     }
 
-    static mockUser(uid: string): User {
+    static mockUser(uid: string, metaInf?: UserMetaInf): User {
         return {
             id: uid,
             name: uid,
             avatarUrl: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y',
             bio: 'lalalalala\nasdfasdf\nasdasd',
             followerAmount: 1000,
-            followingAmount: 10000
+            followingAmount: 10000,
+            userMeta: metaInf
         };
     }
 
@@ -34,7 +35,12 @@ export class UserService {
     }
 
     queryConnectedUsers(ownerId: string, connectionType: string, forEach: (u: User) => void) {
-        forEach(UserService.mockUser(ownerId + '1'));
-        forEach(UserService.mockUser(ownerId + '2'));
+        console.log(connectionType, connectionType === 'following');
+        const metaInf: UserMetaInf = {
+            isFollowed: connectionType === 'following',
+            isBlacklisted: false
+        };
+        forEach(UserService.mockUser(ownerId + '1', metaInf));
+        forEach(UserService.mockUser(ownerId + '2', metaInf));
     }
 }
