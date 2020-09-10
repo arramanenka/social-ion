@@ -10,7 +10,7 @@ import {User} from '../../../model/user';
 })
 export class ConnectionListPage implements OnInit {
 
-    private ownerId: string;
+    ownerId: string;
     connectionType: string;
     connectedUsers: User[] = [];
 
