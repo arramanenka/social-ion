@@ -18,7 +18,8 @@ export class UserMiniatureComponent implements OnInit {
     ngOnInit() {
     }
 
-    follow() {
+    follow(event: Event) {
+        event.stopPropagation();
         this.userService.followUser(
             () => {
                 this.user.userMeta.isFollowed = true;
@@ -26,7 +27,8 @@ export class UserMiniatureComponent implements OnInit {
         );
     }
 
-    unfollow() {
+    unfollow(event: Event) {
+        event.stopPropagation();
         this.userService.unfollowUser(
             () => {
                 this.user.userMeta.isFollowed = false;

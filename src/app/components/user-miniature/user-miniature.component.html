@@ -1,7 +1,7 @@
-<ion-grid>
+<ion-grid routerLink="/profile/{{user.id}}">
     <ion-row class="ion-justify-content-between">
         <ion-col size="3">
-            <ion-avatar routerLink="/profile/{{user.id}}">
+            <ion-avatar>
                 <ion-img [src]="user.avatarUrl"></ion-img>
             </ion-avatar>
         </ion-col>
@@ -9,8 +9,8 @@
             <ion-text>{{user.name}}</ion-text>
         </ion-col>
         <ion-col *ngIf="user.userMeta" size="4">
-            <ion-button *ngIf="user.userMeta.isFollowed" fill="clear" (click)="unfollow()">Unfollow</ion-button>
-            <ion-button *ngIf="!user.userMeta.isFollowed" (click)="follow()">Follow</ion-button>
+            <ion-button *ngIf="user.userMeta.isFollowed" fill="clear" (click)="unfollow($event)">Unfollow</ion-button>
+            <ion-button *ngIf="!user.userMeta.isFollowed" (click)="follow($event)">Follow</ion-button>
         </ion-col>
     </ion-row>
 </ion-grid>
