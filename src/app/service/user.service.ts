@@ -19,7 +19,7 @@ export class UserService {
             bio: 'lalalalala\nasdfasdf\nasdasd',
             followerAmount: 1000,
             followingAmount: 10000,
-            userMeta: metaInf
+            userMeta: {...metaInf}
         };
     }
 
