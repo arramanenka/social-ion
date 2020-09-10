@@ -9,8 +9,8 @@
             <ion-text>{{user.name}}</ion-text>
         </ion-col>
         <ion-col *ngIf="user.userMeta" size="4">
-            <ion-button *ngIf="user.userMeta.isFollowed" fill="clear">Unfollow</ion-button>
-            <ion-button *ngIf="!user.userMeta.isFollowed">Follow</ion-button>
+            <ion-button *ngIf="user.userMeta.isFollowed" fill="clear" (click)="unfollow()">Unfollow</ion-button>
+            <ion-button *ngIf="!user.userMeta.isFollowed" (click)="follow()">Follow</ion-button>
         </ion-col>
     </ion-row>
 </ion-grid>

@@ -43,4 +43,12 @@ export class UserService {
         forEach(UserService.mockUser(ownerId + '1', metaInf));
         forEach(UserService.mockUser(ownerId + '2', metaInf));
     }
+
+    followUser(onSuccess: () => void) {
+        onSuccess();
+    }
+
+    unfollowUser(onSuccess: () => void) {
+        onSuccess();
+    }
 }
