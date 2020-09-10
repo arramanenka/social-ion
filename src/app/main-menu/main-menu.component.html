@@ -1,25 +1,14 @@
-<ion-menu [contentId]="contentId">
-    <ion-header>
-        <ion-toolbar color="primary">
-            <ion-title routerLink="profile" (click)="closeMenu()" class="ion-no-padding">
-                <ion-grid class="ion-no-padding">
-                    <ion-row class="ion-no-padding">
-                        <ion-col size="3" offset="1">
-                            <ion-avatar>
-                                <ion-img [src]="user.avatarUrl"></ion-img>
-                            </ion-avatar>
-                        </ion-col>
-                        <ion-col size="7" class="ion-text-center ion-text-justify">
-                            {{user.name}}
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-title>
-        </ion-toolbar>
-    </ion-header>
-    <ion-content>
-        <ion-list>
-            <ion-item routerLink="inbox" (click)="closeMenu()">Inbox</ion-item>
-        </ion-list>
-    </ion-content>
-</ion-menu>
+<ion-tabs>
+    <ion-tab-bar >
+        <ion-tab-button tab="inbox">
+            <ion-icon name="chatbubbles-outline"></ion-icon>
+            <ion-label>Inbox</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="profile">
+            <ion-avatar slot="icon">
+                <ion-img [src]="user.avatarUrl"></ion-img>
+            </ion-avatar>
+            <ion-label>Profile</ion-label>
+        </ion-tab-button>
+    </ion-tab-bar>
+</ion-tabs>
