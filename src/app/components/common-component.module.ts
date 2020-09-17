@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 import {UserMiniatureComponent} from './user-miniature/user-miniature.component';
 import {RouterModule} from '@angular/router';
+import {MainMenuComponent} from './main-menu/main-menu.component';
 
 @NgModule({
     imports: [
@@ -13,10 +14,10 @@ import {RouterModule} from '@angular/router';
         RouterModule,
     ],
     declarations: [
-        UserMiniatureComponent
+        UserMiniatureComponent, MainMenuComponent
     ],
     exports: [
-        UserMiniatureComponent
+        UserMiniatureComponent, MainMenuComponent
     ]
 })
 export class CommonComponentModule {
