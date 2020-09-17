@@ -8,12 +8,12 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
-import {MainMenuComponent} from './main-menu/main-menu.component';
+import {CommonComponentModule} from './components/common-component.module';
 
 @NgModule({
-    declarations: [AppComponent, MainMenuComponent],
+    declarations: [AppComponent],
     entryComponents: [],
-    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, CommonComponentModule],
     providers: [
         StatusBar,
         SplashScreen,

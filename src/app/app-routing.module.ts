@@ -1,19 +1,26 @@
 import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import {MainMenuComponent} from './components/main-menu/main-menu.component';
 
 const routes: Routes = [
     {
         path: '',
         redirectTo: 'inbox',
-        pathMatch: 'full'
+        pathMatch: 'full',
     },
     {
-        path: 'profile',
-        loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule),
-    },
-    {
-        path: 'inbox',
-        loadChildren: () => import('./pages/inbox/inbox.module').then(m => m.InboxPageModule)
+        path: '',
+        component: MainMenuComponent,
+        children: [
+            {
+                path: 'profile',
+                loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule),
+            },
+            {
+                path: 'inbox',
+                loadChildren: () => import('./pages/inbox/inbox.module').then(m => m.InboxPageModule)
+            }
+        ]
     },
     {
         path: 'chat',

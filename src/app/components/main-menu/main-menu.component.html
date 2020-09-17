@@ -1,0 +1,13 @@
+<ion-tabs>
+    <!--admittedly, right now it does not work as expected for PC, due to https://github.com/ionic-team/ionic-framework/issues/19484, so beware-->
+    <ion-tab-bar [slot]="tabPlacement">
+        <ion-tab-button tab="inbox">
+            <ion-icon name="chatbubbles-outline"></ion-icon>
+            <ion-label>Inbox</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="profile">
+            <ion-icon name="person-circle-outline"></ion-icon>
+            <ion-label>Profile</ion-label>
+        </ion-tab-button>
+    </ion-tab-bar>
+</ion-tabs>
