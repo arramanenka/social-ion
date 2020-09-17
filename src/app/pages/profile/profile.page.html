@@ -1,6 +1,9 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>{{user.name}}</ion-title>
+        <ion-button *ngIf="isOwnProfile" slot="end" fill="clear">
+            <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+        </ion-button>
     </ion-toolbar>
 </ion-header>
 

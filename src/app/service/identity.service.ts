@@ -11,4 +11,8 @@ export class IdentityService {
     getSelfId() {
         return 'self';
     }
+
+    isOwnProfile(uid: string) {
+        return this.getSelfId() === uid;
+    }
 }
