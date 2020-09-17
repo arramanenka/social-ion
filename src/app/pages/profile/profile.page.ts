@@ -13,6 +13,7 @@ export class ProfilePage implements OnInit {
 
     user: User;
     isOwnProfile: boolean;
+    displayBackButton = true;
 
     constructor(
         private identityService: IdentityService,
@@ -31,6 +32,7 @@ export class ProfilePage implements OnInit {
                 });
                 return;
             }
+            this.displayBackButton = false;
             this.userService.querySelf(user => {
                 this.user = user;
                 this.isOwnProfile = true;

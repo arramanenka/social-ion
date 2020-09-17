@@ -14,6 +14,7 @@ const routes: Routes = [
         children: [
             {
                 path: 'profile',
+                pathMatch: 'full',
                 loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule),
             },
             {
@@ -21,6 +22,10 @@ const routes: Routes = [
                 loadChildren: () => import('./pages/inbox/inbox.module').then(m => m.InboxPageModule)
             }
         ]
+    },
+    {
+        path: 'profile',
+        loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule),
     },
     {
         path: 'chat',
