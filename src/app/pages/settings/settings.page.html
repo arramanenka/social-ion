@@ -22,9 +22,10 @@
                         </ion-button>
                     </ng-template>
                     <ng-template [ngIf]="nameEditable">
-                        <form (ngSubmit)="updateName($event)">
+                        <form [formGroup]="ionicForm" (ngSubmit)="updateName()">
                             <ion-item>
-                                <ion-input [value]="user.name" name="name"></ion-input>
+                                <ion-label position="floating">Nickname</ion-label>
+                                <ion-input formControlName="name"></ion-input>
                             </ion-item>
                             <ion-item>
                                 <ion-button slot="start" fill="clear" (click)="nameEditable=false">

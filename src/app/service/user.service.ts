@@ -54,4 +54,9 @@ export class UserService {
     unblock(user: User) {
         user.userMeta.isBlacklisted = false;
     }
+
+    changeName(name: string) {
+        // since for now I did not connect to proper service & login provider, id == name
+        this.identityService.setId(name);
+    }
 }
