@@ -6,7 +6,7 @@ import {Router} from '@angular/router';
 })
 export class IdentityService {
 
-    private selfId = 'self';
+    private selfId = null;
 
     constructor(private router: Router) {
     }
