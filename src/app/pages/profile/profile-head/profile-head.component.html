@@ -15,4 +15,16 @@
     <ion-row>
         <ion-text class="user-bio">{{user.bio}}</ion-text>
     </ion-row>
+    <ion-row *ngIf="!isOwnProfile && user.userMeta">
+        <ion-item lines="none" class="full-width">
+            <ion-button slot="start" *ngIf="user.userMeta.isFollowed" fill="clear" (click)="unfollow($event)">
+                Unfollow
+            </ion-button>
+            <ion-button slot="start" *ngIf="!user.userMeta.isFollowed" (click)="follow($event)">Follow
+            </ion-button>
+            <ion-button slot="end">
+                message
+            </ion-button>
+        </ion-item>
+    </ion-row>
 </ion-grid>

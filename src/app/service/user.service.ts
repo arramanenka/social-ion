@@ -43,12 +43,12 @@ export class UserService {
         forEach(UserService.mockUser(ownerId + '2', metaInf));
     }
 
-    followUser(onSuccess: () => void) {
-        onSuccess();
+    followUser(user: User) {
+        user.userMeta.isFollowed = true;
     }
 
-    unfollowUser(onSuccess: () => void) {
-        onSuccess();
+    unfollowUser(user: User) {
+        user.userMeta.isFollowed = false;
     }
 
     unblock(user: User) {
