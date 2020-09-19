@@ -21,7 +21,11 @@ const routes: Routes = [
             {
                 path: 'inbox',
                 loadChildren: () => import('./pages/inbox/inbox.module').then(m => m.InboxPageModule)
-            }
+            },
+            {
+                path: 'search',
+                loadChildren: () => import('./pages/search/search.module').then(m => m.SearchPageModule)
+            },
         ],
         canActivate: [AuthGuard]
     },

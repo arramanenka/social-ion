@@ -59,4 +59,9 @@ export class UserService {
         // since for now I did not connect to proper service & login provider, id == name
         this.identityService.setId(name);
     }
+
+    findAllByNicknameStart(nicknameStart: string, forEach: (value: User) => void) {
+        forEach(UserService.mockUser(nicknameStart + '1'));
+        forEach(UserService.mockUser(nicknameStart + '2'));
+    }
 }
