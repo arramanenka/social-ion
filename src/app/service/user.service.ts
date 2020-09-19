@@ -35,10 +35,9 @@ export class UserService {
     }
 
     queryConnectedUsers(ownerId: string, connectionType: string, forEach: (u: User) => void) {
-        console.log(connectionType, connectionType === 'following');
         const metaInf: UserMetaInf = {
             isFollowed: connectionType === 'following',
-            isBlacklisted: false
+            isBlacklisted: connectionType === 'blacklist'
         };
         forEach(UserService.mockUser(ownerId + '1', metaInf));
         forEach(UserService.mockUser(ownerId + '2', metaInf));
@@ -50,5 +49,14 @@ export class UserService {
 
     unfollowUser(onSuccess: () => void) {
         onSuccess();
+    }
+
+    unblock(user: User) {
+        user.userMeta.isBlacklisted = false;
+    }
+
+    changeName(name: string) {
+        // since for now I did not connect to proper service & login provider, id == name
+        this.identityService.setId(name);
     }
 }
