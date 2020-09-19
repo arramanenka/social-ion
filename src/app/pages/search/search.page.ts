@@ -22,8 +22,10 @@ export class SearchPage implements OnInit {
 
     search() {
         this.foundUsers = [];
-        this.userService.findAllByNicknameStart(this.searchBar.value, value => {
-            this.foundUsers.push(value);
-        });
+        if (this.searchBar.value) {
+            this.userService.findAllByNicknameStart(this.searchBar.value, value => {
+                this.foundUsers.push(value);
+            });
+        }
     }
 }
