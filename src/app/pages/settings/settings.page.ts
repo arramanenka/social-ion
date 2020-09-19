@@ -11,7 +11,7 @@ import {User} from '../../../model/user';
 export class SettingsPage implements OnInit {
 
     user: User;
-    nameEditable = true;
+    nameEditable = false;
 
     constructor(
         private identityService: IdentityService,
