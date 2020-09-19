@@ -35,6 +35,11 @@ const routes: Routes = [
         path: 'connection-list',
         loadChildren: () => import('./pages/connection-list/connection-list.module').then(m => m.ConnectionListPageModule)
     },
+  {
+    path: 'settings',
+    loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule)
+  },
+
 ];
 
 @NgModule({

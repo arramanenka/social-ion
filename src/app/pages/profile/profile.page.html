@@ -4,7 +4,7 @@
             <ion-back-button [defaultHref]="'/inbox'"></ion-back-button>
         </ion-buttons>
         <ion-title>{{user.name}}</ion-title>
-        <ion-button *ngIf="isOwnProfile" slot="end" fill="clear">
+        <ion-button *ngIf="isOwnProfile" slot="end" fill="clear" routerLink="/settings">
             <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
         </ion-button>
     </ion-toolbar>
