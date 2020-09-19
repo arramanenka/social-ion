@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../service/user.service';
 import {User} from '../../../model/user';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {IdentityService} from '../../service/identity.service';
 
 @Component({
     selector: 'app-settings',
@@ -15,8 +16,9 @@ export class SettingsPage implements OnInit {
     ionicForm: FormGroup;
 
     constructor(
+        private identityService: IdentityService,
         private userService: UserService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
     ) {
     }
 
@@ -33,5 +35,9 @@ export class SettingsPage implements OnInit {
         if (this.ionicForm.valid) {
             this.userService.changeName(this.ionicForm.value.name);
         }
+    }
+
+    logout() {
+        this.identityService.logout();
     }
 }
