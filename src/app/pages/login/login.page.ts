@@ -18,7 +18,7 @@ export class LoginPage implements OnInit {
         private router: Router
     ) {
         this.ionicForm = formBuilder.group({
-            name: ['', [Validators.required, Validators.minLength(1)]]
+            id: ['', [Validators.required, Validators.minLength(1)]]
         });
     }
 
