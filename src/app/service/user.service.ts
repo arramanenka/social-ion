@@ -18,7 +18,7 @@ export class UserService {
         return {
             id: uid,
             name: uid,
-            avatarUrl: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y',
+            avatar: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y',
             bio: 'lalalalala\nasdfasdf\nasdasd',
             followersAmount: 1000,
             followingAmount: 10000,

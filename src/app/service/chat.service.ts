@@ -22,7 +22,7 @@ export class ChatService {
                 user: {
                     name: 'id',
                     id: 'id',
-                    avatarUrl: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'
+                    avatar: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'
                 },
                 lastMessageTime: new Date()
             },
@@ -30,7 +30,7 @@ export class ChatService {
                 user: {
                     name: 'id1',
                     id: 'id1',
-                    avatarUrl: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'
+                    avatar: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'
                 },
                 lastMessageTime: new Date()
             }
@@ -45,7 +45,7 @@ export class ChatService {
                 user: {
                     name: uid,
                     id: uid,
-                    avatarUrl: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'
+                    avatar: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'
                 },
                 lastMessageTime: new Date()
             }
