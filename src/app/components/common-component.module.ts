@@ -5,6 +5,7 @@ import {IonicModule} from '@ionic/angular';
 import {UserMiniatureComponent} from './user-miniature/user-miniature.component';
 import {RouterModule} from '@angular/router';
 import {MainMenuComponent} from './main-menu/main-menu.component';
+import {LoadingComponent} from './loading/loading.component';
 
 @NgModule({
     imports: [
@@ -14,10 +15,10 @@ import {MainMenuComponent} from './main-menu/main-menu.component';
         RouterModule,
     ],
     declarations: [
-        UserMiniatureComponent, MainMenuComponent
+        UserMiniatureComponent, MainMenuComponent, LoadingComponent
     ],
     exports: [
-        UserMiniatureComponent, MainMenuComponent
+        UserMiniatureComponent, MainMenuComponent, LoadingComponent
     ]
 })
 export class CommonComponentModule {

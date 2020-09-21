@@ -8,13 +8,15 @@ import {ProfilePageRoutingModule} from './profile-routing.module';
 
 import {ProfilePage} from './profile.page';
 import {ProfileHeadComponent} from './profile-head/profile-head.component';
+import {CommonComponentModule} from '../../components/common-component.module';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        ProfilePageRoutingModule
+        ProfilePageRoutingModule,
+        CommonComponentModule
     ],
     declarations: [ProfilePage, ProfileHeadComponent]
 })

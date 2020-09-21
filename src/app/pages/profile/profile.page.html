@@ -22,7 +22,5 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-    <div *ngIf="!user" class="spinner-container">
-        <ion-spinner name="bubbles"></ion-spinner>
-    </div>
+    <app-loading *ngIf="!user"></app-loading>
 </ion-content>
