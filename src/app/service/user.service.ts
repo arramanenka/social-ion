@@ -30,13 +30,19 @@ export class UserService {
         this.queryUser(this.identityService.getSelfId(), action);
     }
 
-    queryUser(uid: string, action: (value: User) => void): void {
+    queryUser(uid: string, action: (value: User) => void, onNotFound?: () => void): void {
         this.http.get<User>(`http://localhost:8080/user/${uid}?id=${this.identityService.getSelfId()}`)
             .subscribe(n => {
                 console.log(n);
                 setTimeout(() => {
                     action(n);
                 }, 500);
+            }, error => {
+                if (error.status === 404 && onNotFound) {
+                    onNotFound();
+                    return;
+                }
+                console.log(error);
             });
     }
 

@@ -14,6 +14,7 @@ export class ProfilePage implements OnInit {
     user: User;
     isOwnProfile: boolean;
     displayBackButton = true;
+    userNotFound = false;
 
     constructor(
         private identityService: IdentityService,
@@ -29,6 +30,8 @@ export class ProfilePage implements OnInit {
                 this.userService.queryUser(uid, user => {
                     this.user = user;
                     this.isOwnProfile = this.identityService.isOwnProfile(uid);
+                }, () => {
+                    this.userNotFound = true;
                 });
                 return;
             }
