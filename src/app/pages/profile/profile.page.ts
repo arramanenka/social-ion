@@ -43,4 +43,10 @@ export class ProfilePage implements OnInit {
         });
     }
 
+    reloadProfile(event) {
+        this.userService.querySelf(user => {
+            this.user = user;
+            event.target.complete();
+        }, true);
+    }
 }

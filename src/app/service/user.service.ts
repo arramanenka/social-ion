@@ -8,6 +8,8 @@ import {HttpClient} from '@angular/common/http';
 })
 export class UserService {
 
+    private currentUser: User;
+
     constructor(
         private identityService: IdentityService,
         private http: HttpClient
@@ -26,8 +28,15 @@ export class UserService {
         };
     }
 
-    querySelf(action: (value: User) => void): void {
-        this.queryUser(this.identityService.getSelfId(), action);
+    querySelf(action: (value: User) => void, forceReload?: boolean): void {
+        if (!forceReload && this.currentUser) {
+            action(this.currentUser);
+            return;
+        }
+        this.queryUser(this.identityService.getSelfId(), (u) => {
+            this.currentUser = u;
+            action(u);
+        });
     }
 
     queryUser(uid: string, action: (value: User) => void, onNotFound?: () => void): void {
