@@ -18,7 +18,7 @@ export class UserService {
         return {
             id: uid,
             name: uid,
-            avatar: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y',
+            avatarUrl: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y',
             bio: 'lalalalala\nasdfasdf\nasdasd',
             followersAmount: 1000,
             followingAmount: 10000,
@@ -67,9 +67,9 @@ export class UserService {
         user.userMeta.isBlacklisted = false;
     }
 
-    changeName(name: string) {
-        // since for now I did not connect to proper service & login provider, id == name
-        this.identityService.setId(name);
+    saveProfile(user: User, onChange?: (user: User) => void) {
+        this.http.post<User>(`http://localhost:8080/user?id=${this.identityService.getSelfId()}`, user)
+            .subscribe(onChange);
     }
 
     findAllByNicknameStart(nicknameStart: string, forEach: (value: User) => void) {
