@@ -57,23 +57,23 @@ export class UserService {
 
     queryConnectedUsers(ownerId: string, connectionType: string, forEach: (u: User) => void) {
         const metaInf: UserMetaInf = {
-            isFollowed: connectionType === 'following',
-            isBlacklisted: connectionType === 'blacklist'
+            isFollowedByQueryingPerson: connectionType === 'following',
+            isBlacklistedByQueryingPerson: connectionType === 'blacklist'
         };
         forEach(UserService.mockUser(ownerId + '1', metaInf));
         forEach(UserService.mockUser(ownerId + '2', metaInf));
     }
 
     followUser(user: User) {
-        user.userMeta.isFollowed = true;
+        user.userMeta.isFollowedByQueryingPerson = true;
     }
 
     unfollowUser(user: User) {
-        user.userMeta.isFollowed = false;
+        user.userMeta.isFollowedByQueryingPerson = false;
     }
 
     unblock(user: User) {
-        user.userMeta.isBlacklisted = false;
+        user.userMeta.isBlacklistedByQueryingPerson = false;
     }
 
     saveProfile(user: User, onChange?: (user: User) => void) {

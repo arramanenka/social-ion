@@ -33,7 +33,7 @@ export class UserMiniatureComponent implements OnInit {
     }
 
     shouldShowFollow() {
-        return !this.user.userMeta.isBlacklisted;
+        return !this.user.userMeta.isBlacklistedByQueryingPerson;
     }
 
     showUnblockDialog(event: Event) {

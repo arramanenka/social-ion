@@ -9,12 +9,14 @@
             <ion-text>{{user.name}}</ion-text>
         </ion-col>
         <ion-col *ngIf="user.userMeta" size="4">
-            <ion-button *ngIf="shouldShowFollow() && user.userMeta.isFollowed" fill="clear" (click)="unfollow($event)">
+            <ion-button (click)="unfollow($event)"
+                        *ngIf="shouldShowFollow() && user.userMeta.isFollowedByQueryingPerson" fill="clear">
                 Unfollow
             </ion-button>
-            <ion-button *ngIf="shouldShowFollow() && !user.userMeta.isFollowed" (click)="follow($event)">Follow
+            <ion-button (click)="follow($event)"
+                        *ngIf="shouldShowFollow() && !user.userMeta.isFollowedByQueryingPerson">Follow
             </ion-button>
-            <ion-button *ngIf="!shouldShowFollow() && user.userMeta.isBlacklisted" color="danger"
+            <ion-button *ngIf="!shouldShowFollow() && user.userMeta.isBlacklistedByQueryingPerson" color="danger"
                         (click)="showUnblockDialog($event)">
                 Unblock
             </ion-button>

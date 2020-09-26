@@ -17,10 +17,11 @@
     </ion-row>
     <ion-row *ngIf="!isOwnProfile && user.userMeta">
         <ion-item lines="none" class="full-width">
-            <ion-button slot="start" *ngIf="user.userMeta.isFollowed" fill="clear" (click)="unfollow($event)">
+            <ion-button (click)="unfollow($event)" *ngIf="user.userMeta.isFollowedByQueryingPerson" fill="clear"
+                        slot="start">
                 Unfollow
             </ion-button>
-            <ion-button slot="start" *ngIf="!user.userMeta.isFollowed" (click)="follow($event)">Follow
+            <ion-button (click)="follow($event)" *ngIf="!user.userMeta.isFollowedByQueryingPerson" slot="start">Follow
             </ion-button>
             <ion-button slot="end">
                 message

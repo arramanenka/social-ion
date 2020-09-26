@@ -9,9 +9,8 @@ export interface User {
 }
 
 export interface UserMetaInf {
-    isBlacklisted: boolean;
-    /**
-     * is obtained user followed by querying user
-     */
-    isFollowed: boolean;
+    isBlacklistedByQueryingPerson: boolean;
+    isFollowedByQueryingPerson: boolean;
+    isQueryingPersonBlacklisted: boolean;
+    isFollowingQueryingPerson: boolean;
 }
