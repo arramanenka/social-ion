@@ -42,7 +42,6 @@ export class UserService {
     queryUser(uid: string, action: (value: User) => void, onNotFound?: () => void): void {
         this.http.get<User>(`http://localhost:8080/user/${uid}?id=${this.identityService.getSelfId()}`)
             .subscribe(n => {
-                console.log(n);
                 setTimeout(() => {
                     action(n);
                 }, 500);
@@ -56,12 +55,34 @@ export class UserService {
     }
 
     queryConnectedUsers(ownerId: string, connectionType: string, forEach: (u: User) => void) {
-        const metaInf: UserMetaInf = {
-            isFollowedByQueryingPerson: connectionType === 'following',
-            isBlacklistedByQueryingPerson: connectionType === 'blacklist'
+        let url = 'http://localhost:8080/connections/';
+        if (connectionType === 'blacklist') {
+            url += connectionType;
+        } else {
+            url += `${ownerId}/${connectionType}`;
+        }
+        url = `${url}?id=${this.identityService.getSelfId()}`;
+        this.queryJsonStream(url, (data) => {
+            const user: User = JSON.parse(data);
+            forEach(user);
+        });
+    }
+
+    queryJsonStream(url: string, onData: (data: string) => void) {
+        const eventSource = new EventSource(url);
+        let startedOnce = false;
+        eventSource.onopen = () => {
+            if (startedOnce) {
+                eventSource.close();
+            }
+            startedOnce = true;
         };
-        forEach(UserService.mockUser(ownerId + '1', metaInf));
-        forEach(UserService.mockUser(ownerId + '2', metaInf));
+        eventSource.onmessage = e => {
+            onData(e.data);
+        };
+        eventSource.onerror = er => {
+            console.log(er);
+        };
     }
 
     followUser(user: User) {
