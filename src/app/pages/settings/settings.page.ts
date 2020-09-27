@@ -33,8 +33,11 @@ export class SettingsPage implements OnInit {
 
     updateName() {
         if (this.ionicForm.valid) {
+            if (this.user.name === this.ionicForm.value.name) {
+                this.nameEditable = false;
+                return;
+            }
             this.user.name = this.ionicForm.value.name;
-            this.user.avatarUrl = 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y';
             this.userService.saveProfile(this.user, _ => {
                 this.userService.querySelf(us => this.user = us, true);
                 this.nameEditable = false;
