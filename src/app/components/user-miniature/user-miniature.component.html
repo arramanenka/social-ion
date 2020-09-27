@@ -1,9 +1,7 @@
 <ion-grid routerLink="/profile/{{user.id}}">
     <ion-row class="ion-justify-content-between">
         <ion-col size="3">
-            <ion-avatar>
-                <ion-img [src]="user.avatarUrl"></ion-img>
-            </ion-avatar>
+            <app-avatar [avatarUrl]="user.avatarUrl"></app-avatar>
         </ion-col>
         <ion-col size="5">
             <ion-text>{{user.name}}</ion-text>

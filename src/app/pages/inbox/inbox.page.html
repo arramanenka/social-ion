@@ -13,10 +13,8 @@
                         <ion-grid>
                             <ion-row>
                                 <ion-col size="3">
-                                    <ion-avatar routerLink="/profile/{{chat.user.id}}"
-                                                (click)="stopPropagation($event)">
-                                        <ion-img [src]="chat.user.avatarUrl"></ion-img>
-                                    </ion-avatar>
+                                    <app-avatar (click)="stopPropagation($event)" [avatarUrl]="chat.user.avatarUrl"
+                                                routerLink="/profile/{{chat.user.id}}"></app-avatar>
                                 </ion-col>
                                 <ion-col size="9" class="ion-text-center ion-text-justify">
                                     {{chat.user.name}}

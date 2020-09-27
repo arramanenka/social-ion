@@ -12,9 +12,7 @@
         <ion-row>
             <ion-col size-md="6" offset-md="3">
                 <ion-item>
-                    <ion-avatar slot="start">
-                        <ion-img [src]="user.avatarUrl"></ion-img>
-                    </ion-avatar>
+                    <app-avatar [avatarUrl]="user.avatarUrl" slot="start"></app-avatar>
                     <ng-template [ngIf]="!nameEditable">
                         <span class="ion-padding">{{user.name}}</span>
                         <ion-button slot="end" fill="clear" (click)="nameEditable=true">

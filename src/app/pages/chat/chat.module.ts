@@ -9,6 +9,7 @@ import {ChatPageRoutingModule} from './chat-routing.module';
 import {ChatPage} from './chat.page';
 import {AutosizeModule} from 'ngx-autosize';
 import {MessageComponent} from './message/message.component';
+import {CommonComponentModule} from '../../components/common-component.module';
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import {MessageComponent} from './message/message.component';
         FormsModule,
         IonicModule,
         ChatPageRoutingModule,
-        AutosizeModule
+        AutosizeModule,
+        CommonComponentModule
     ],
     declarations: [ChatPage, MessageComponent]
 })
