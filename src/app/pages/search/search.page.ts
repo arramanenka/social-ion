@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {User} from '../../../model/user';
 import {UserService} from '../../service/user.service';
 import {IonSearchbar} from '@ionic/angular';
@@ -13,7 +13,7 @@ export class SearchPage implements OnInit {
     @ViewChild(IonSearchbar)
     searchBar: IonSearchbar;
 
-    constructor(private userService: UserService, private changeDetectorRef: ChangeDetectorRef) {
+    constructor(private userService: UserService) {
     }
 
     ngOnInit() {
@@ -25,8 +25,6 @@ export class SearchPage implements OnInit {
         if (this.searchBar.value) {
             this.userService.findAllByNicknameStart(this.searchBar.value, value => {
                 this.foundUsers.push(value);
-                // for some reason in here changes did not get autodetected
-                this.changeDetectorRef.detectChanges();
             });
         }
     }
