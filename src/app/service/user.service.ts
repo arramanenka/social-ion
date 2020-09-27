@@ -9,6 +9,7 @@ import {HttpClient} from '@angular/common/http';
 export class UserService {
 
     private currentUser: User;
+    private userviceHost = 'http://localhost:8080';
 
     constructor(
         private identityService: IdentityService,
@@ -40,7 +41,7 @@ export class UserService {
     }
 
     queryUser(uid: string, action: (value: User) => void, onNotFound?: () => void): void {
-        this.http.get<User>(`http://localhost:8080/user/${uid}?id=${this.identityService.getSelfId()}`)
+        this.http.get<User>(`${this.userviceHost}/user/${uid}?id=${this.identityService.getSelfId()}`)
             .subscribe(n => {
                 setTimeout(() => {
                     action(n);
@@ -55,7 +56,7 @@ export class UserService {
     }
 
     queryConnectedUsers(ownerId: string, connectionType: string, forEach: (u: User) => void) {
-        let url = 'http://localhost:8080/connections/';
+        let url = `${this.userviceHost}/connections/`;
         if (connectionType === 'blacklist') {
             url += connectionType;
         } else {
@@ -63,6 +64,30 @@ export class UserService {
         }
         url = `${url}?id=${this.identityService.getSelfId()}`;
         this.queryJsonStream(url, (data) => {
+            const user: User = JSON.parse(data);
+            forEach(user);
+        });
+    }
+
+    followUser(user: User) {
+        user.userMeta.isFollowedByQueryingPerson = true;
+    }
+
+    unfollowUser(user: User) {
+        user.userMeta.isFollowedByQueryingPerson = false;
+    }
+
+    unblock(user: User) {
+        user.userMeta.isBlacklistedByQueryingPerson = false;
+    }
+
+    saveProfile(user: User, onChange?: (user: User) => void) {
+        this.http.post<User>(`${this.userviceHost}/user?id=${this.identityService.getSelfId()}`, user)
+            .subscribe(onChange);
+    }
+
+    findAllByNicknameStart(nicknameStart: string, forEach: (value: User) => void) {
+        this.queryJsonStream(`${this.userviceHost}/users/nickname/${nicknameStart}?id=${this.identityService.getSelfId()}`, data => {
             const user: User = JSON.parse(data);
             forEach(user);
         });
@@ -83,27 +108,5 @@ export class UserService {
         eventSource.onerror = er => {
             console.log(er);
         };
-    }
-
-    followUser(user: User) {
-        user.userMeta.isFollowedByQueryingPerson = true;
-    }
-
-    unfollowUser(user: User) {
-        user.userMeta.isFollowedByQueryingPerson = false;
-    }
-
-    unblock(user: User) {
-        user.userMeta.isBlacklistedByQueryingPerson = false;
-    }
-
-    saveProfile(user: User, onChange?: (user: User) => void) {
-        this.http.post<User>(`http://localhost:8080/user?id=${this.identityService.getSelfId()}`, user)
-            .subscribe(onChange);
-    }
-
-    findAllByNicknameStart(nicknameStart: string, forEach: (value: User) => void) {
-        forEach(UserService.mockUser(nicknameStart + '1'));
-        forEach(UserService.mockUser(nicknameStart + '2'));
     }
 }

@@ -2,7 +2,7 @@
     <ion-grid>
         <ion-row class="full-height">
             <ion-col size-md="6" offset-md="3" class="full-height">
-                <ion-searchbar debounce="500" placeholder="nickname" (ionChange)="search()"></ion-searchbar>
+                <ion-searchbar (ionChange)="search()" debounce="300" placeholder="nickname"></ion-searchbar>
                 <ion-list *ngIf="foundUsers">
                     <app-user-miniature *ngFor="let u of foundUsers" [user]="u"></app-user-miniature>
                 </ion-list>
