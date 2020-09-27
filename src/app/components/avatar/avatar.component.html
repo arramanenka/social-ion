@@ -1,3 +1,4 @@
 <ion-avatar>
-  <ion-img [src]="avatarUrl" alt="avatar"></ion-img>
+  <ion-img *ngIf="avatarUrl" [src]="avatarUrl" alt="avatar"></ion-img>
+  <ion-img *ngIf="!avatarUrl" alt="avatar" src="/assets/defaults/avatar.png"></ion-img>
 </ion-avatar>
