@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {MainMenuComponent} from './components/main-menu/main-menu.component';
 import {AuthGuard} from './auth.guard';
+import {TabGuard} from './tab.guard';
 
 const routes: Routes = [
     {
@@ -32,7 +33,7 @@ const routes: Routes = [
     {
         path: 'profile',
         loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule),
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard, TabGuard]
     },
     {
         path: 'chat',
