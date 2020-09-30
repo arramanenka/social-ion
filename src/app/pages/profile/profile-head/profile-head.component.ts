@@ -20,11 +20,19 @@ export class ProfileHeadComponent implements OnInit {
 
     unfollow(event: MouseEvent) {
         event.stopPropagation();
-        this.userService.unfollowUser(this.user);
+        this.userService.unfollowUser(this.user).subscribe(r => {
+            if (r) {
+                this.user.userMeta.followedByQueryingPerson = false;
+            }
+        });
     }
 
     follow(event: MouseEvent) {
         event.stopPropagation();
-        this.userService.followUser(this.user);
+        this.userService.followUser(this.user).subscribe(r => {
+            if (r) {
+                this.user.userMeta.followedByQueryingPerson = true;
+            }
+        });
     }
 }

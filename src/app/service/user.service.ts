@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {User, UserMetaInf} from '../../model/user';
+import {User} from '../../model/user';
 import {IdentityService} from './identity.service';
 import {HttpClient} from '@angular/common/http';
+import {Subject} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -15,18 +16,6 @@ export class UserService {
         private identityService: IdentityService,
         private http: HttpClient
     ) {
-    }
-
-    static mockUser(uid: string, metaInf?: UserMetaInf): User {
-        return {
-            id: uid,
-            name: uid,
-            avatarUrl: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y',
-            bio: 'lalalalala\nasdfasdf\nasdasd',
-            followersAmount: 1000,
-            followingAmount: 10000,
-            userMeta: {...metaInf}
-        };
     }
 
     querySelf(action: (value: User) => void, forceReload?: boolean): void {
@@ -69,12 +58,20 @@ export class UserService {
         });
     }
 
-    followUser(user: User) {
-        user.userMeta.followedByQueryingPerson = true;
+    followUser(user: User): Subject<boolean> {
+        const result = new Subject<boolean>();
+        this.http.post<void>(`${this.userviceHost}/connections/follower/${user.id}?id=${this.identityService.getSelfId()}`, null)
+            .subscribe(() => result.next(true), e => {
+                result.error(e);
+            });
+        return result;
     }
 
-    unfollowUser(user: User) {
-        user.userMeta.followedByQueryingPerson = false;
+    unfollowUser(user: User): Subject<boolean> {
+        const result = new Subject<boolean>();
+        this.http.delete<void>(`${this.userviceHost}/connections/follower/${user.id}?id=${this.identityService.getSelfId()}`)
+            .subscribe(() => result.next(true), e => result.error(e));
+        return result;
     }
 
     unblock(user: User) {

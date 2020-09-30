@@ -24,12 +24,20 @@ export class UserMiniatureComponent implements OnInit {
 
     follow(event: Event) {
         event.stopPropagation();
-        this.userService.followUser(this.user);
+        this.userService.followUser(this.user).subscribe(r => {
+            if (r) {
+                this.user.userMeta.followedByQueryingPerson = true;
+            }
+        });
     }
 
     unfollow(event: Event) {
         event.stopPropagation();
-        this.userService.unfollowUser(this.user);
+        this.userService.unfollowUser(this.user).subscribe(r => {
+            if (r) {
+                this.user.userMeta.followedByQueryingPerson = false;
+            }
+        });
     }
 
     shouldShowFollow() {
