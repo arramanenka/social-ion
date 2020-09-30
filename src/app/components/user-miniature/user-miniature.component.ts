@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../../../model/user';
 import {UserService} from '../../service/user.service';
 import {AlertController} from '@ionic/angular';
+import {IdentityService} from '../../service/identity.service';
 
 @Component({
     selector: 'app-user-miniature',
@@ -13,13 +14,19 @@ export class UserMiniatureComponent implements OnInit {
     @Input()
     user: User;
 
+    isOwnMiniature = false;
+
     constructor(
+        private identityService: IdentityService,
         private userService: UserService,
         private alertController: AlertController
     ) {
     }
 
     ngOnInit() {
+        if (this.user.id === this.identityService.getSelfId()) {
+            this.isOwnMiniature = true;
+        }
     }
 
     follow(event: Event) {

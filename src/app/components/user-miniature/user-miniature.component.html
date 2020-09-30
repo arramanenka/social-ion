@@ -1,4 +1,4 @@
-<ion-grid routerLink="/profile/{{user.id}}">
+<ion-grid *ngIf="!isOwnMiniature" routerLink="/profile/{{user.id}}">
     <ion-row class="ion-justify-content-between">
         <ion-col size="3">
             <app-avatar [avatarUrl]="user.avatarUrl"></app-avatar>
@@ -18,6 +18,16 @@
                         (click)="showUnblockDialog($event)">
                 Unblock
             </ion-button>
+        </ion-col>
+    </ion-row>
+</ion-grid>
+<ion-grid *ngIf="isOwnMiniature">
+    <ion-row>
+        <ion-col size="3">
+            <app-avatar [avatarUrl]="user.avatarUrl"></app-avatar>
+        </ion-col>
+        <ion-col size="9">
+            <ion-text>{{user.name}}</ion-text>
         </ion-col>
     </ion-row>
 </ion-grid>
