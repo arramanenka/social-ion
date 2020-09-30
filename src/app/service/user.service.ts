@@ -70,15 +70,15 @@ export class UserService {
     }
 
     followUser(user: User) {
-        user.userMeta.isFollowedByQueryingPerson = true;
+        user.userMeta.followedByQueryingPerson = true;
     }
 
     unfollowUser(user: User) {
-        user.userMeta.isFollowedByQueryingPerson = false;
+        user.userMeta.followedByQueryingPerson = false;
     }
 
     unblock(user: User) {
-        user.userMeta.isBlacklistedByQueryingPerson = false;
+        user.userMeta.blacklistedByQueryingPerson = false;
     }
 
     saveProfile(user: User, onChange?: (user: User) => void) {
