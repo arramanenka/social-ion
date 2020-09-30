@@ -74,8 +74,11 @@ export class UserService {
         return result;
     }
 
-    unblock(user: User) {
-        user.userMeta.blacklistedByQueryingPerson = false;
+    unblock(user: User): Subject<boolean> {
+        const result = new Subject<boolean>();
+        this.http.delete<void>(`${this.userviceHost}/connections/blacklist/${user.id}?id=${this.identityService.getSelfId()}`)
+            .subscribe(() => result.next(true), e => result.error(e));
+        return result;
     }
 
     saveProfile(user: User, onChange?: (user: User) => void) {

@@ -52,7 +52,11 @@ export class UserMiniatureComponent implements OnInit {
                 {
                     text: 'Yes',
                     handler: () => {
-                        this.userService.unblock(this.user);
+                        this.userService.unblock(this.user).subscribe(r => {
+                            if (r) {
+                                this.user.userMeta.blacklistedByQueryingPerson = false;
+                            }
+                        });
                     }
                 }
             ]
