@@ -41,11 +41,11 @@
                     <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
                 </ion-item>
                 <ion-item>
-                    <ion-label>Theme </ion-label>
-                    <ion-select (ionChange)="pickTheme($event)" [value]="queryCurrentTheme()">
-                        <ion-select-option value="system">System default</ion-select-option>
-                        <ion-select-option value="dark">Dark theme</ion-select-option>
-                        <ion-select-option value="light">Light theme</ion-select-option>
+                    <ion-label>Theme</ion-label>
+                    <ion-select (ionChange)="pickTheme($event)" [value]="queryCurrentTheme()" class="ion-text-nowrap">
+                        <ion-select-option value="system">System</ion-select-option>
+                        <ion-select-option value="dark">Dark</ion-select-option>
+                        <ion-select-option value="light">Light</ion-select-option>
                     </ion-select>
                 </ion-item>
                 <ion-item>
