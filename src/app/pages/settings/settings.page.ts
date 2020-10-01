@@ -48,4 +48,19 @@ export class SettingsPage implements OnInit {
     logout() {
         this.identityService.logout();
     }
+
+    toggleDarkMode(event) {
+        const darkModeEnabled = event.detail.checked;
+        document.body.setAttribute('data-theme', darkModeEnabled ? 'dark' : 'light');
+    }
+
+    queryDarkModeEnabled() {
+        const dataTheme = document.body.getAttribute('data-theme');
+        if (dataTheme === 'dark') {
+            return true;
+        } else if (dataTheme === 'light') {
+            return false;
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
 }
