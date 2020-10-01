@@ -13,9 +13,17 @@ import {HttpClientModule} from '@angular/common/http';
 
 export function setUpTheme() {
     return () => {
+        let theme = null;
         const darkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (darkTheme) {
-            document.body.setAttribute('data-theme', 'dark');
+            theme = 'dark';
+        }
+        const savedTheme = localStorage.getItem('data-theme');
+        if (savedTheme) {
+            theme = savedTheme;
+        }
+        if (theme) {
+            document.body.setAttribute('data-theme', theme);
         }
     };
 }

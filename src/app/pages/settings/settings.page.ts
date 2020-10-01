@@ -57,7 +57,6 @@ export class SettingsPage implements OnInit {
 
     queryDarkModeEnabled() {
         const dataTheme = document.body.getAttribute('data-theme');
-        console.log(dataTheme, dataTheme === 'dark');
         return dataTheme === 'dark';
     }
 }
