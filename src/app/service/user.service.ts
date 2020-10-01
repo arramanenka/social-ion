@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {User} from '../../model/user';
 import {IdentityService} from './identity.service';
 import {HttpClient} from '@angular/common/http';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -86,27 +86,27 @@ export class UserService {
             .subscribe(onChange);
     }
 
-    findAllByNicknameStart(nicknameStart: string, forEach: (value: User) => void) {
-        this.queryJsonStream(`${this.userviceHost}/users/nickname/${nicknameStart}?id=${this.identityService.getSelfId()}`, data => {
-            const user: User = JSON.parse(data);
-            forEach(user);
-        });
+    findAllByNicknameStart(nicknameStart: string): Observable<User> {
+        return this.queryJsonStream(`${this.userviceHost}/users/nickname/${nicknameStart}?id=${this.identityService.getSelfId()}`);
     }
 
-    queryJsonStream(url: string, onData: (data: string) => void) {
-        const eventSource = new EventSource(url);
-        let startedOnce = false;
-        eventSource.onopen = () => {
-            if (startedOnce) {
+    queryJsonStream<R>(url: string, onData?: (data: string) => void): Observable<R> {
+        return new Observable(observer => {
+            const eventSource = new EventSource(url);
+            eventSource.onmessage = e => {
+                observer.next(JSON.parse(e.data));
+            };
+            eventSource.onerror = er => {
+                if (eventSource.readyState !== eventSource.CONNECTING) {
+                    observer.error(er);
+                }
                 eventSource.close();
-            }
-            startedOnce = true;
-        };
-        eventSource.onmessage = e => {
-            onData(e.data);
-        };
-        eventSource.onerror = er => {
-            console.log(er);
-        };
+                observer.complete();
+            };
+            return () => {
+                eventSource.close();
+            };
+        });
+
     }
 }
