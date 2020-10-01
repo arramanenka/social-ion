@@ -7,7 +7,6 @@ import {IdentityService} from '../../service/identity.service';
 @Component({
     selector: 'app-settings',
     templateUrl: './settings.page.html',
-    styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit {
 

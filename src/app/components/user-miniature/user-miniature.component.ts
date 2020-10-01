@@ -7,7 +7,6 @@ import {IdentityService} from '../../service/identity.service';
 @Component({
     selector: 'app-user-miniature',
     templateUrl: './user-miniature.component.html',
-    styleUrls: ['./user-miniature.component.scss'],
 })
 export class UserMiniatureComponent implements OnInit {
 
