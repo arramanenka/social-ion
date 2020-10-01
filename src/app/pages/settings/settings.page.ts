@@ -48,4 +48,34 @@ export class SettingsPage implements OnInit {
     logout() {
         this.identityService.logout();
     }
+
+    pickTheme(event) {
+        console.log(event);
+        const value = event.detail.value;
+        switch (value) {
+            case 'system':
+                localStorage.removeItem('data-theme');
+                // change default theme accordingly
+                const darkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (darkTheme) {
+                    document.body.setAttribute('data-theme', 'dark');
+                } else {
+                    document.body.setAttribute('data-theme', 'light');
+                }
+                break;
+            default:
+                localStorage.setItem('data-theme', value);
+                document.body.setAttribute('data-theme', value);
+                break;
+        }
+    }
+
+    queryCurrentTheme() {
+        const theme = localStorage.getItem('data-theme');
+        if (theme) {
+            return theme;
+        } else {
+            return 'system';
+        }
+    }
 }
