@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouteReuseStrategy} from '@angular/router';
 
@@ -11,6 +11,15 @@ import {AppRoutingModule} from './app-routing.module';
 import {CommonComponentModule} from './components/common-component.module';
 import {HttpClientModule} from '@angular/common/http';
 
+export function setUpTheme() {
+    return () => {
+        const darkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (darkTheme) {
+            document.body.setAttribute('data-theme', 'dark');
+        }
+    };
+}
+
 @NgModule({
     declarations: [AppComponent],
     entryComponents: [],
@@ -18,7 +27,8 @@ import {HttpClientModule} from '@angular/common/http';
     providers: [
         StatusBar,
         SplashScreen,
-        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+        {provide: APP_INITIALIZER, useFactory: setUpTheme, multi: true}
     ],
     bootstrap: [AppComponent]
 })

@@ -50,17 +50,14 @@ export class SettingsPage implements OnInit {
     }
 
     toggleDarkMode(event) {
-        const darkModeEnabled = event.detail.checked;
-        document.body.setAttribute('data-theme', darkModeEnabled ? 'dark' : 'light');
+        const theme = event.detail.checked ? 'dark' : 'light';
+        localStorage.setItem('data-theme', theme);
+        document.body.setAttribute('data-theme', theme);
     }
 
     queryDarkModeEnabled() {
         const dataTheme = document.body.getAttribute('data-theme');
-        if (dataTheme === 'dark') {
-            return true;
-        } else if (dataTheme === 'light') {
-            return false;
-        }
-        return window.matchMedia('(prefers-color-scheme: dark)').matches;
+        console.log(dataTheme, dataTheme === 'dark');
+        return dataTheme === 'dark';
     }
 }
