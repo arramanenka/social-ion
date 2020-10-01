@@ -22,7 +22,7 @@ export class ConnectionListPage implements OnInit {
             this.connectionType = value.get('type');
             this.ownerId = value.get('uid');
         });
-        this.userService.queryConnectedUsers(this.ownerId, this.connectionType, u => {
+        this.userService.queryConnectedUsers(this.ownerId, this.connectionType).subscribe(u => {
             this.connectedUsers.push(u);
         });
     }

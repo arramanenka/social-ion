@@ -44,7 +44,7 @@ export class UserService {
             });
     }
 
-    queryConnectedUsers(ownerId: string, connectionType: string, forEach: (u: User) => void) {
+    queryConnectedUsers(ownerId: string, connectionType: string): Observable<User> {
         let url = `${this.userviceHost}/connections/`;
         if (connectionType === 'blacklist') {
             url += connectionType;
@@ -52,10 +52,7 @@ export class UserService {
             url += `${ownerId}/${connectionType}`;
         }
         url = `${url}?id=${this.identityService.getSelfId()}`;
-        this.queryJsonStream(url, (data) => {
-            const user: User = JSON.parse(data);
-            forEach(user);
-        });
+        return this.queryJsonStream(url);
     }
 
     followUser(user: User): Subject<boolean> {
@@ -90,7 +87,7 @@ export class UserService {
         return this.queryJsonStream(`${this.userviceHost}/users/nickname/${nicknameStart}?id=${this.identityService.getSelfId()}`);
     }
 
-    queryJsonStream<R>(url: string, onData?: (data: string) => void): Observable<R> {
+    queryJsonStream<R>(url: string): Observable<R> {
         return new Observable(observer => {
             const eventSource = new EventSource(url);
             eventSource.onmessage = e => {
