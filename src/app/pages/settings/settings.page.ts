@@ -49,14 +49,33 @@ export class SettingsPage implements OnInit {
         this.identityService.logout();
     }
 
-    toggleDarkMode(event) {
-        const theme = event.detail.checked ? 'dark' : 'light';
-        localStorage.setItem('data-theme', theme);
-        document.body.setAttribute('data-theme', theme);
+    pickTheme(event) {
+        console.log(event);
+        const value = event.detail.value;
+        switch (value) {
+            case 'system':
+                localStorage.removeItem('data-theme');
+                // change default theme accordingly
+                const darkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (darkTheme) {
+                    document.body.setAttribute('data-theme', 'dark');
+                } else {
+                    document.body.setAttribute('data-theme', 'light');
+                }
+                break;
+            default:
+                localStorage.setItem('data-theme', value);
+                document.body.setAttribute('data-theme', value);
+                break;
+        }
     }
 
-    queryDarkModeEnabled() {
-        const dataTheme = document.body.getAttribute('data-theme');
-        return dataTheme === 'dark';
+    queryCurrentTheme() {
+        const theme = localStorage.getItem('data-theme');
+        if (theme) {
+            return theme;
+        } else {
+            return 'system';
+        }
     }
 }
