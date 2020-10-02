@@ -5,7 +5,6 @@ import {UserService} from '../../../service/user.service';
 @Component({
     selector: 'app-profile-head',
     templateUrl: './profile-head.component.html',
-    styleUrls: ['./profile-head.component.scss'],
 })
 export class ProfileHeadComponent implements OnInit {
 

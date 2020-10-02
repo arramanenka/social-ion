@@ -6,7 +6,6 @@ import {IonSearchbar} from '@ionic/angular';
 @Component({
     selector: 'app-search',
     templateUrl: './search.page.html',
-    styleUrls: ['./search.page.scss'],
 })
 export class SearchPage implements OnInit {
     foundUsers: User[];
