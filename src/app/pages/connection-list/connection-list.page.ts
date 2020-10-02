@@ -7,7 +7,6 @@ import {IdentityService} from '../../service/identity.service';
 @Component({
     selector: 'app-connection-list',
     templateUrl: './connection-list.page.html',
-    styleUrls: ['./connection-list.page.scss'],
 })
 export class ConnectionListPage implements OnInit {
 
