@@ -26,7 +26,7 @@ export class LoginPage implements OnInit {
 
     login() {
         if (this.ionicForm.valid) {
-            this.identityService.setId(this.ionicForm.value.name);
+            this.identityService.setId(this.ionicForm.value.id);
             this.router.navigateByUrl('').then();
         }
     }
