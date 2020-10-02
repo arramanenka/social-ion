@@ -13,7 +13,8 @@
             <ion-col size-md="4" offset-md="4" class="full-height">
                 <ion-list *ngIf="connectedUsers && connectedUsers.length">
                     <ion-item *ngFor="let u of connectedUsers">
-                        <app-user-miniature class="full-width" [user]="u"></app-user-miniature>
+                        <app-user-miniature [blacklistMiniature]="connectionType ==='blacklist'" [user]="u"
+                                            class="full-width"></app-user-miniature>
                     </ion-item>
                 </ion-list>
                 <div *ngIf="!connectedUsers || !connectedUsers.length" class="centered-container">

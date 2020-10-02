@@ -9,18 +9,22 @@
             </div>
         </ion-col>
         <ion-col *ngIf="user.userMeta" size="4">
-            <div class="centered-container">
-                <ion-button (click)="unfollow($event)"
-                            *ngIf="shouldShowFollow() && user.userMeta.followedByQueryingPerson" fill="clear">
+            <div *ngIf="!blacklistMiniature && !user.userMeta.blacklistedByQueryingPerson" class="centered-container">
+                <ion-button (click)="unfollow($event)" *ngIf="user.userMeta.followedByQueryingPerson" fill="clear">
                     Unfollow
                 </ion-button>
-                <ion-button (click)="follow($event)"
-                            *ngIf="shouldShowFollow() && !user.userMeta.followedByQueryingPerson">Follow
-                </ion-button>
+                <ion-button (click)="follow($event)" *ngIf="!user.userMeta.followedByQueryingPerson">Follow</ion-button>
+            </div>
+            <div *ngIf="user.userMeta.blacklistedByQueryingPerson" class="centered-container">
                 <ion-button (click)="showUnblockDialog($event)"
-                            *ngIf="!shouldShowFollow() && user.userMeta.blacklistedByQueryingPerson"
-                            color="danger">
+                            color="danger" fill="outline">
                     Unblock
+                </ion-button>
+            </div>
+            <div *ngIf="blacklistMiniature && !user.userMeta.blacklistedByQueryingPerson" class="centered-container">
+                <ion-button (click)="showBlockDialog($event)"
+                            color="danger">
+                    Block
                 </ion-button>
             </div>
         </ion-col>
