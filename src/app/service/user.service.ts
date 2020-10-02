@@ -71,6 +71,13 @@ export class UserService {
         return result;
     }
 
+    block(user: User): Subject<boolean> {
+        const result = new Subject<boolean>();
+        this.http.post<void>(`${this.userviceHost}/connections/blacklist/${user.id}?id=${this.identityService.getSelfId()}`, null)
+            .subscribe(() => result.next(true), e => result.error(e));
+        return result;
+    }
+
     unblock(user: User): Subject<boolean> {
         const result = new Subject<boolean>();
         this.http.delete<void>(`${this.userviceHost}/connections/blacklist/${user.id}?id=${this.identityService.getSelfId()}`)

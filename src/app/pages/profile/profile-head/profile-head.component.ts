@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../../../../model/user';
 import {UserService} from '../../../service/user.service';
-import {ActionSheetController} from '@ionic/angular';
+import {ActionSheetController, AlertController} from '@ionic/angular';
 import {ActionSheetButton} from '@ionic/core/dist/types/components/action-sheet/action-sheet-interface';
 
 @Component({
@@ -13,7 +13,11 @@ export class ProfileHeadComponent implements OnInit {
     @Input() user: User;
     @Input() isOwnProfile: boolean;
 
-    constructor(private userService: UserService, private actionSheetController: ActionSheetController) {
+    constructor(
+        private userService: UserService,
+        private actionSheetController: ActionSheetController,
+        private alertController: AlertController
+    ) {
     }
 
     ngOnInit() {
@@ -46,6 +50,29 @@ export class ProfileHeadComponent implements OnInit {
                 }
             });
         }
+        buttonsToShow.push({
+            text: 'Block',
+            handler: () => {
+                this.alertController.create({
+                    message: `Are you sure you want to block ${this.user.name} ?`,
+                    buttons: ['Cancel',
+                        {
+                            text: 'Yes',
+                            handler: () => {
+                                this.userService.block(this.user).subscribe(r => {
+                                        if (r) {
+                                            this.user.userMeta.followingQueryingPerson = false;
+                                            this.user.userMeta.followedByQueryingPerson = false;
+                                            this.user.userMeta.blacklistedByQueryingPerson = true;
+                                        }
+                                    }
+                                );
+                            }
+                        }
+                    ]
+                }).then(res => res.present());
+            }
+        });
         this.actionSheetController.create({
             buttons: buttonsToShow
         }).then(actionSheet => actionSheet.present());
