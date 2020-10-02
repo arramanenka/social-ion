@@ -1,4 +1,4 @@
-<ion-grid>
+<ion-grid class="ion-no-padding">
     <ion-row>
         <ion-col>
             <app-avatar [avatarUrl]="user.avatarUrl"></app-avatar>
@@ -14,13 +14,18 @@
         <ion-text class="user-bio">{{user.bio}}</ion-text>
     </ion-row>
     <ion-row *ngIf="!isOwnProfile && user.userMeta">
-        <ion-item lines="none" class="full-width">
-            <ion-button (click)="unfollow($event)" *ngIf="user.userMeta.followedByQueryingPerson" fill="clear"
-                        slot="start">
-                Unfollow
-            </ion-button>
-            <ion-button (click)="follow($event)" *ngIf="!user.userMeta.followedByQueryingPerson" slot="start">Follow
-            </ion-button>
+        <ion-item *ngIf="!user.userMeta.queryingPersonBlacklisted" class="full-width" lines="none">
+            <div *ngIf="!user.userMeta.blacklistedByQueryingPerson" slot="start">
+                <ion-button (click)="showPopoverForConnections($event)" *ngIf="user.userMeta.followedByQueryingPerson"
+                            fill="clear">
+                    {{getConnectionType()}}
+                    <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+                </ion-button>
+                <ion-button (click)="showPopoverForConnections($event)" *ngIf="!user.userMeta.followedByQueryingPerson">
+                    {{getConnectionType()}}
+                    <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+                </ion-button>
+            </div>
             <ion-button slot="end">
                 message
             </ion-button>
