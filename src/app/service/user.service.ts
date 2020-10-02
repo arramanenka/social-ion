@@ -19,7 +19,7 @@ export class UserService {
     }
 
     querySelf(action: (value: User) => void, forceReload?: boolean): void {
-        if (!forceReload && this.currentUser) {
+        if (!forceReload && this.currentUser && this.currentUser.id === this.identityService.getSelfId()) {
             action(this.currentUser);
             return;
         }
