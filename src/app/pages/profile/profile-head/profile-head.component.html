@@ -14,21 +14,25 @@
         <ion-text class="user-bio">{{user.bio}}</ion-text>
     </ion-row>
     <ion-row *ngIf="!isOwnProfile && user.userMeta">
-        <ion-item *ngIf="!user.userMeta.queryingPersonBlacklisted" class="full-width" lines="none">
-            <div *ngIf="!user.userMeta.blacklistedByQueryingPerson" slot="start">
-                <ion-button (click)="showPopoverForConnections($event)" *ngIf="user.userMeta.followedByQueryingPerson"
-                            fill="clear">
-                    {{getConnectionType()}}
-                    <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
-                </ion-button>
-                <ion-button (click)="showPopoverForConnections($event)" *ngIf="!user.userMeta.followedByQueryingPerson">
-                    {{getConnectionType()}}
-                    <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
-                </ion-button>
-            </div>
+        <ion-item *ngIf="!(user.userMeta.blacklistedByQueryingPerson || user.userMeta.queryingPersonBlacklisted)"
+                  class="full-width" lines="none">
+            <ion-button (click)="showPopoverForConnections($event)" *ngIf="user.userMeta.followedByQueryingPerson"
+                        fill="clear">
+                {{getConnectionType()}}
+                <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+            </ion-button>
+            <ion-button (click)="showPopoverForConnections($event)" *ngIf="!user.userMeta.followedByQueryingPerson">
+                {{getConnectionType()}}
+                <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+            </ion-button>
             <ion-button slot="end">
                 message
             </ion-button>
         </ion-item>
+        <div *ngIf="user.userMeta.blacklistedByQueryingPerson" class="full-width">
+            <div class="centered-container">
+                <ion-button (click)="showUnblockDialogue($event)" color="danger" fill="outline">Unblock</ion-button>
+            </div>
+        </div>
     </ion-row>
 </ion-grid>

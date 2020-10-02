@@ -87,4 +87,23 @@ export class ProfileHeadComponent implements OnInit {
             return 'Follow';
         }
     }
+
+    showUnblockDialogue(event: MouseEvent) {
+        event.stopPropagation();
+        this.alertController.create({
+            message: `Are you sure you want to unblock ${this.user.name} ?`,
+            buttons: ['Cancel',
+                {
+                    text: 'Yes',
+                    handler: () => {
+                        this.userService.unblock(this.user).subscribe(r => {
+                            if (r) {
+                                this.user.userMeta.blacklistedByQueryingPerson = false;
+                            }
+                        });
+                    }
+                }
+            ]
+        }).then(res => res.present());
+    }
 }
