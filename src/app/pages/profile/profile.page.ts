@@ -27,12 +27,7 @@ export class ProfilePage implements OnInit {
         this.activatedRoute.paramMap.subscribe(value => {
             const uid = value.get('uid');
             if (uid) {
-                this.userService.queryUser(uid, user => {
-                    this.user = user;
-                    this.isOwnProfile = this.identityService.isOwnProfile(uid);
-                }, () => {
-                    this.userNotFound = true;
-                });
+                this.queryUser(uid);
                 return;
             }
             this.displayBackButton = false;
@@ -44,9 +39,28 @@ export class ProfilePage implements OnInit {
     }
 
     reloadProfile(event) {
-        this.userService.querySelf(user => {
+        if (this.isOwnProfile) {
+            this.userService.querySelf(user => {
+                this.user = user;
+                event.target.complete();
+            }, true);
+            return;
+        }
+        this.queryUser(this.user.id, event);
+    }
+
+    private queryUser(uid: string, event?) {
+        this.userService.queryUser(uid, user => {
             this.user = user;
-            event.target.complete();
-        }, true);
+            this.isOwnProfile = this.identityService.isOwnProfile(uid);
+            if (event) {
+                event.target.complete();
+            }
+        }, () => {
+            if (event) {
+                event.target.complete();
+            }
+            this.userNotFound = true;
+        });
     }
 }
