@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../../service/user.service';
 import {User} from '../../../model/user';
+import {IdentityService} from '../../service/identity.service';
 
 @Component({
     selector: 'app-connection-list',
@@ -14,7 +15,11 @@ export class ConnectionListPage implements OnInit {
     connectionType: string;
     connectedUsers: User[] = [];
 
-    constructor(private activatedRoute: ActivatedRoute, private userService: UserService) {
+    constructor(
+        private identityService: IdentityService,
+        private activatedRoute: ActivatedRoute,
+        private userService: UserService
+    ) {
     }
 
     ngOnInit() {
@@ -23,6 +28,10 @@ export class ConnectionListPage implements OnInit {
             this.ownerId = value.get('uid');
         });
         this.userService.queryConnectedUsers(this.ownerId, this.connectionType).subscribe(u => {
+            if (u.id === this.identityService.getSelfId()) {
+                this.connectedUsers.unshift(u);
+                return;
+            }
             this.connectedUsers.push(u);
         });
     }
