@@ -77,8 +77,6 @@ export class UserMiniatureComponent implements OnInit {
                     handler: () => {
                         this.userService.block(this.user).subscribe(r => {
                                 if (r) {
-                                    this.user.userMeta.followingQueryingPerson = false;
-                                    this.user.userMeta.followedByQueryingPerson = false;
                                     this.user.userMeta.blacklistedByQueryingPerson = true;
                                 }
                             }
