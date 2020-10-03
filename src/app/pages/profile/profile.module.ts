@@ -9,6 +9,7 @@ import {ProfilePageRoutingModule} from './profile-routing.module';
 import {ProfilePage} from './profile.page';
 import {ProfileHeadComponent} from './profile-head/profile-head.component';
 import {CommonComponentModule} from '../../components/common-component.module';
+import {ProfileEditComponent} from './profile-edit/profile-edit.component';
 
 @NgModule({
     imports: [
@@ -18,7 +19,7 @@ import {CommonComponentModule} from '../../components/common-component.module';
         ProfilePageRoutingModule,
         CommonComponentModule
     ],
-    declarations: [ProfilePage, ProfileHeadComponent]
+    declarations: [ProfilePage, ProfileHeadComponent, ProfileEditComponent]
 })
 export class ProfilePageModule {
 }

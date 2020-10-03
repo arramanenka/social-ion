@@ -1,0 +1,22 @@
+<ion-header translucent="true">
+    <ion-toolbar>
+        <ion-button (click)="dismiss($event)" color="danger" fill="clear" slot="start">
+            <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" slot="end">
+            <ion-icon name="checkmark-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-grid class="full-width full-height">
+        <ion-row class="full-width">
+            <div class="centered-container">
+                <app-avatar [avatarUrl]="user.avatarUrl"></app-avatar>
+            </div>
+        </ion-row>
+        <ion-row>
+            <ion-textarea [value]="user.bio"></ion-textarea>
+        </ion-row>
+    </ion-grid>
+</ion-content>

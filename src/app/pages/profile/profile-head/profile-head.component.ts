@@ -1,8 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../../../../model/user';
 import {UserService} from '../../../service/user.service';
-import {ActionSheetController, AlertController} from '@ionic/angular';
+import {ActionSheetController, AlertController, ModalController} from '@ionic/angular';
 import {ActionSheetButton} from '@ionic/core/dist/types/components/action-sheet/action-sheet-interface';
+import {ProfileEditComponent} from '../profile-edit/profile-edit.component';
 
 @Component({
     selector: 'app-profile-head',
@@ -16,7 +17,8 @@ export class ProfileHeadComponent implements OnInit {
     constructor(
         private userService: UserService,
         private actionSheetController: ActionSheetController,
-        private alertController: AlertController
+        private alertController: AlertController,
+        private modalController: ModalController
     ) {
     }
 
@@ -105,5 +107,15 @@ export class ProfileHeadComponent implements OnInit {
                 }
             ]
         }).then(res => res.present());
+    }
+
+    editBio(event) {
+        event.stopPropagation();
+        this.modalController.create({
+            component: ProfileEditComponent,
+            componentProps: {
+                user: this.user
+            }
+        }).then(model => model.present());
     }
 }
