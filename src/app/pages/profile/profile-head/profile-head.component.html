@@ -4,10 +4,14 @@
             <app-avatar [avatarUrl]="user.avatarUrl"></app-avatar>
         </ion-col>
         <ion-col routerLink="/connection-list/{{user.id}}/followers">
-            <ion-row>{{user.followersAmount}} followers</ion-row>
+            <div class="centered-container">
+                <ion-text>{{user.followersAmount}} followers</ion-text>
+            </div>
         </ion-col>
         <ion-col routerLink="/connection-list/{{user.id}}/following">
-            <ion-row>{{user.followingAmount}} following</ion-row>
+            <div class="centered-container">
+                <ion-text>{{user.followingAmount}} following</ion-text>
+            </div>
         </ion-col>
     </ion-row>
     <ion-row>
