@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {User} from '../../model/user';
 import {IdentityService} from './identity.service';
 import {HttpClient} from '@angular/common/http';
-import {Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -18,30 +18,17 @@ export class UserService {
     ) {
     }
 
-    querySelf(action: (value: User) => void, forceReload?: boolean): void {
+    querySelf(forceReload?: boolean): Observable<User> {
         if (!forceReload && this.currentUser && this.currentUser.id === this.identityService.getSelfId()) {
-            action(this.currentUser);
-            return;
+            return new BehaviorSubject<User>(this.currentUser).asObservable();
         }
-        this.queryUser(this.identityService.getSelfId(), (u) => {
-            this.currentUser = u;
-            action(u);
-        });
+        const userObservable = this.queryUser(this.identityService.getSelfId());
+        userObservable.subscribe(u => this.currentUser = u);
+        return userObservable;
     }
 
-    queryUser(uid: string, action: (value: User) => void, onNotFound?: () => void): void {
-        this.http.get<User>(`${this.userviceHost}/user/${uid}?id=${this.identityService.getSelfId()}`)
-            .subscribe(n => {
-                setTimeout(() => {
-                    action(n);
-                }, 500);
-            }, error => {
-                if (error.status === 404 && onNotFound) {
-                    onNotFound();
-                    return;
-                }
-                console.log(error);
-            });
+    queryUser(uid: string): Observable<User> {
+        return this.http.get<User>(`${this.userviceHost}/user/${uid}?id=${this.identityService.getSelfId()}`);
     }
 
     queryConnectedUsers(ownerId: string, connectionType: string): Observable<User> {

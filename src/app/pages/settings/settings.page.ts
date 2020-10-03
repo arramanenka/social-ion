@@ -22,7 +22,7 @@ export class SettingsPage implements OnInit {
     }
 
     ngOnInit() {
-        this.userService.querySelf(u => {
+        this.userService.querySelf().subscribe(u => {
             this.user = u;
             this.ionicForm = this.formBuilder.group({
                 name: [this.user.name, [Validators.required, Validators.minLength(1)]]
@@ -38,7 +38,7 @@ export class SettingsPage implements OnInit {
             }
             this.user.name = this.ionicForm.value.name;
             this.userService.saveProfile(this.user, _ => {
-                this.userService.querySelf(us => this.user = us, true);
+                this.userService.querySelf(true).subscribe(us => this.user = us);
                 this.nameEditable = false;
             });
         }

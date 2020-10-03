@@ -30,7 +30,7 @@ export class ProfilePage implements OnInit {
                 return;
             }
             this.displayBackButton = false;
-            this.userService.querySelf(user => {
+            this.userService.querySelf().subscribe(user => {
                 this.user = user;
                 this.isOwnProfile = true;
             });
@@ -39,27 +39,32 @@ export class ProfilePage implements OnInit {
 
     reloadProfile(event) {
         if (this.isOwnProfile) {
-            this.userService.querySelf(user => {
+            this.userService.querySelf(true).subscribe(user => {
                 this.user = user;
                 event.target.complete();
-            }, true);
+            });
             return;
         }
         this.queryUser(this.user.id, event);
     }
 
     private queryUser(uid: string, event?) {
-        this.userService.queryUser(uid, user => {
-            this.user = user;
-            this.isOwnProfile = this.identityService.isOwnProfile(uid);
-            if (event) {
-                event.target.complete();
-            }
-        }, () => {
-            if (event) {
-                event.target.complete();
-            }
-            this.userNotFound = true;
-        });
+        this.userService.queryUser(uid)
+            .subscribe(user => {
+                this.user = user;
+                this.isOwnProfile = this.identityService.isOwnProfile(uid);
+                if (event) {
+                    event.target.complete();
+                }
+            }, error => {
+                if (event) {
+                    event.target.complete();
+                }
+                if (error.status === 404) {
+                    this.userNotFound = true;
+                    return;
+                }
+                console.log(error);
+            });
     }
 }
