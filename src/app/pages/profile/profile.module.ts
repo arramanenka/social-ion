@@ -10,6 +10,7 @@ import {ProfilePage} from './profile.page';
 import {ProfileHeadComponent} from './profile-head/profile-head.component';
 import {CommonComponentModule} from '../../components/common-component.module';
 import {ProfileEditComponent} from './profile-edit/profile-edit.component';
+import {AutosizeModule} from 'ngx-autosize';
 
 @NgModule({
     imports: [
@@ -17,7 +18,8 @@ import {ProfileEditComponent} from './profile-edit/profile-edit.component';
         FormsModule,
         IonicModule,
         ProfilePageRoutingModule,
-        CommonComponentModule
+        CommonComponentModule,
+        AutosizeModule
     ],
     declarations: [ProfilePage, ProfileHeadComponent, ProfileEditComponent]
 })
