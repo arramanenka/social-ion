@@ -11,7 +11,7 @@
         </ion-col>
     </ion-row>
     <ion-row>
-        <ion-text class="user-bio">{{user.bio}}</ion-text>
+        <pre>{{user.bio}}</pre>
     </ion-row>
     <ion-row *ngIf="isOwnProfile">
         <ion-button (click)="editBio($event)" color="medium" fill="clear" size="small">
