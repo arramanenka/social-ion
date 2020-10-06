@@ -3,6 +3,7 @@ import {User} from '../../model/user';
 import {IdentityService} from './identity.service';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {HttpService} from './http.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,6 +15,7 @@ export class UserService {
 
     constructor(
         private identityService: IdentityService,
+        private httpService: HttpService,
         private http: HttpClient
     ) {
     }
@@ -39,7 +41,7 @@ export class UserService {
             url += `${ownerId}/${connectionType}`;
         }
         url = `${url}?id=${this.identityService.getSelfId()}`;
-        return this.queryJsonStream(url);
+        return this.httpService.queryJsonStream(url);
     }
 
     followUser(user: User): Subject<boolean> {
@@ -78,26 +80,6 @@ export class UserService {
     }
 
     findAllByNicknameStart(nicknameStart: string): Observable<User> {
-        return this.queryJsonStream(`${this.userviceHost}/users/nickname/${nicknameStart}?id=${this.identityService.getSelfId()}`);
-    }
-
-    queryJsonStream<R>(url: string): Observable<R> {
-        return new Observable(observer => {
-            const eventSource = new EventSource(url);
-            eventSource.onmessage = e => {
-                observer.next(JSON.parse(e.data));
-            };
-            eventSource.onerror = er => {
-                if (eventSource.readyState !== eventSource.CONNECTING) {
-                    observer.error(er);
-                }
-                eventSource.close();
-                observer.complete();
-            };
-            return () => {
-                eventSource.close();
-            };
-        });
-
+        return this.httpService.queryJsonStream(`${this.userviceHost}/users/nickname/${nicknameStart}?id=${this.identityService.getSelfId()}`);
     }
 }

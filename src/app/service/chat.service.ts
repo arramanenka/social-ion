@@ -3,6 +3,7 @@ import {Chat} from '../../model/chat';
 import {IdentityService} from './identity.service';
 import {Subject} from 'rxjs';
 import {Message} from '../../model/message';
+import {HttpService} from './http.service';
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +11,8 @@ import {Message} from '../../model/message';
 export class ChatService {
 
     constructor(
-        private identityService: IdentityService
+        private identityService: IdentityService,
+        private httpService: HttpService
     ) {
     }
 
