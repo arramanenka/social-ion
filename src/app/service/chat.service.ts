@@ -6,6 +6,7 @@ import {Message} from '../../model/message';
 import {HttpService} from './http.service';
 import {UserService} from './user.service';
 import {catchError, flatMap, map} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -17,12 +18,25 @@ export class ChatService {
     constructor(
         private userService: UserService,
         private identityService: IdentityService,
-        private httpService: HttpService
+        private httpService: HttpService,
+        private http: HttpClient
     ) {
     }
 
     queryChats(): Observable<Chat> {
-        return this.httpService.queryJsonStream<ChatDTO>(`${this.chatserviceUrl}/chats?id=${this.identityService.getSelfId()}`).pipe(
+        return this.mapDtoToProperModel(
+            this.httpService.queryJsonStream<ChatDTO>(`${this.chatserviceUrl}/chats?id=${this.identityService.getSelfId()}`)
+        );
+    }
+
+    queryChat(uid: string): Observable<Chat> {
+        return this.mapDtoToProperModel(
+            this.http.get<ChatDTO>(`${this.chatserviceUrl}/chat/${uid}?id=${this.identityService.getSelfId()}`)
+        );
+    }
+
+    mapDtoToProperModel(chatDtoObservable: Observable<ChatDTO>): Observable<Chat> {
+        return chatDtoObservable.pipe(
             flatMap(e => {
                     const userObservable = this.userService.queryUser(e.interlocutorId);
                     return userObservable.pipe(
@@ -47,21 +61,6 @@ export class ChatService {
                 console.log(err);
                 return empty();
             })
-        );
-    }
-
-    queryChat(uid: string, action: (chat: Chat) => void) {
-        const subj = new Subject<Chat>();
-        subj.subscribe(action);
-        subj.next(
-            {
-                user: {
-                    name: uid,
-                    id: uid,
-                    avatarUrl: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'
-                },
-                lastMessageTime: new Date()
-            }
         );
     }
 

@@ -6,9 +6,10 @@
         <ion-grid>
             <ion-row class="ion-justify-content-start">
                 <ion-col size="auto">
-                    <app-avatar [avatarUrl]="chat.user.avatarUrl" [routerLink]="'/profile/'+ chat.user.id"></app-avatar>
+                    <app-avatar *ngIf="chat" [avatarUrl]="chat.user.avatarUrl"
+                                [routerLink]="'/profile/'+ chat.user.id"></app-avatar>
                 </ion-col>
-                <ion-col size="auto">
+                <ion-col *ngIf="chat" size="auto">
                     {{chat.user.name}}
                 </ion-col>
             </ion-row>

@@ -34,12 +34,12 @@ export class ChatPage implements OnInit, AfterViewInit {
     ngOnInit() {
         this.activatedRoute.paramMap.subscribe(value => {
             const uid = value.get('uid');
-            this.chatService.queryChat(uid, chat => {
+            this.chatService.queryChat(uid).subscribe(chat => {
                 this.chat = chat;
+                this.loadPrevious(null, () => {
+                    this.ionScroll.disabled = false;
+                });
             });
-        });
-        this.loadPrevious(null, () => {
-            this.ionScroll.disabled = false;
         });
     }
 
