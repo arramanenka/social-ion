@@ -8,7 +8,7 @@ import {Chat} from '../../../model/chat';
 })
 export class InboxPage implements OnInit {
 
-    chats: Chat[];
+    chats: Chat[] = [];
 
     constructor(
         private chatService: ChatService
@@ -16,8 +16,8 @@ export class InboxPage implements OnInit {
     }
 
     ngOnInit() {
-        this.chatService.queryChats(value => {
-            this.chats = value;
+        this.chatService.queryChats().subscribe(chat => {
+            this.chats.push(chat);
         });
     }
 

@@ -1,42 +1,53 @@
 import {Injectable} from '@angular/core';
-import {Chat} from '../../model/chat';
+import {Chat, ChatDTO} from '../../model/chat';
 import {IdentityService} from './identity.service';
-import {Subject} from 'rxjs';
+import {BehaviorSubject, empty, Observable, Subject} from 'rxjs';
 import {Message} from '../../model/message';
 import {HttpService} from './http.service';
+import {UserService} from './user.service';
+import {catchError, flatMap, map} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ChatService {
 
+    private chatserviceUrl = 'http://localhost:8081';
+
     constructor(
+        private userService: UserService,
         private identityService: IdentityService,
         private httpService: HttpService
     ) {
     }
 
-    queryChats(action: (value: Chat[]) => void) {
-        const subj = new Subject<Chat[]>();
-        subj.subscribe(action);
-        subj.next([
-            {
-                user: {
-                    name: 'id',
-                    id: 'id',
-                    avatarUrl: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'
-                },
-                lastMessageTime: new Date()
-            },
-            {
-                user: {
-                    name: 'id1',
-                    id: 'id1',
-                    avatarUrl: 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'
-                },
-                lastMessageTime: new Date()
-            }
-        ]);
+    queryChats(): Observable<Chat> {
+        return this.httpService.queryJsonStream<ChatDTO>(`${this.chatserviceUrl}/chats?id=${this.identityService.getSelfId()}`).pipe(
+            flatMap(e => {
+                    const userObservable = this.userService.queryUser(e.interlocutorId);
+                    return userObservable.pipe(
+                        map(user1 => {
+                            const chat: Chat = {
+                                user: user1,
+                                ...e
+                            };
+                            return chat;
+                        }),
+                        catchError(error => {
+                            console.log(error);
+                            const chat: Chat = {
+                                ...e
+                            };
+                            return new BehaviorSubject<Chat>(chat);
+                        })
+                    );
+                }
+            ),
+            catchError(err => {
+                console.log(err);
+                return empty();
+            })
+        );
     }
 
     queryChat(uid: string, action: (chat: Chat) => void) {
