@@ -2,7 +2,7 @@ import {User} from './user';
 
 export interface Chat {
     user?: User;
-    lastMessageTime: Date;
+    lastMessage: Date;
     unreadCount?: number;
     lastMessageText?: string;
 }
@@ -10,7 +10,7 @@ export interface Chat {
 export interface ChatDTO {
     ownerId: string;
     interlocutorId: string;
-    lastMessageTime: Date;
+    lastMessage: Date;
     unreadCount: number;
     lastMessageText: string;
 }

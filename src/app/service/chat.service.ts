@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Chat, ChatDTO} from '../../model/chat';
 import {IdentityService} from './identity.service';
-import {BehaviorSubject, empty, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, empty, Observable} from 'rxjs';
 import {Message} from '../../model/message';
 import {HttpService} from './http.service';
 import {UserService} from './user.service';
@@ -64,34 +64,13 @@ export class ChatService {
         );
     }
 
-    queryReadChatMessages(
-        uid: string, topMessage: Message,
-        onNewMessage: (message: Message) => void,
-        onFinish: () => void
-    ) {
-        const subj = new Subject<Message>();
-        subj.subscribe(onNewMessage);
-        let prevMessageDate = new Date();
-        let prevMessageId = '0';
-        if (topMessage) {
-            prevMessageDate = new Date(topMessage.createdAt);
-            prevMessageDate.setDate(prevMessageDate.getDate() - 1);
-            prevMessageId = topMessage.messageId;
-        }
-        setTimeout(() => {
-            subj.next({
-                text: 'aa',
-                createdAt: prevMessageDate,
-                messageId: prevMessageId + '1',
-                senderId: this.identityService.getSelfId()
-            });
-            subj.next({
-                text: 'aa',
-                createdAt: prevMessageDate,
-                messageId: prevMessageId + '2',
-                senderId: uid
-            });
-            onFinish();
-        }, 500);
+    queryReadChatMessages(uid: string): Observable<Message> {
+        const url = `${this.chatserviceUrl}/messages/${uid}?id=${this.identityService.getSelfId()}`;
+        return this.httpService.queryJsonStream<Message>(url).pipe(
+            map(e => {
+                e.createdAt = new Date(e.createdAt);
+                return e;
+            })
+        );
     }
 }
