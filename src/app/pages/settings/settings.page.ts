@@ -49,7 +49,6 @@ export class SettingsPage implements OnInit {
     }
 
     pickTheme(event) {
-        console.log(event);
         const value = event.detail.value;
         switch (value) {
             case 'system':

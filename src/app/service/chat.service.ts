@@ -43,7 +43,6 @@ export class ChatService {
                         interlocutorId: uid
                     };
                 }
-                console.log(e);
                 const userObservable = this.userService.queryUser(e.interlocutorId);
                 return userObservable.pipe(
                     map(user1 => {
