@@ -15,9 +15,15 @@
                                     slot="start"></app-avatar>
                         <ion-label>
                             <h1>{{chat.user.name}}</h1>
-                            <p>{{chat.lastMessage | date: 'H:mm'}} {{chat.lastMessageText}}</p>
+                            <p>{{chat.lastMessageText}}</p>
                         </ion-label>
-                        <ion-badge *ngIf="chat.unreadCount" color="medium" slot="end">{{chat.unreadCount}}</ion-badge>
+                        <div class="column-container" slot="end">
+                            {{chat.lastMessage | date: 'H:mm'}}
+                            <div class="centered-container">
+                                <ion-badge *ngIf="chat.unreadCount" color="medium"
+                                           slot="end">{{chat.unreadCount}}</ion-badge>
+                            </div>
+                        </div>
                     </ion-item>
                 </ion-list>
             </ion-col>

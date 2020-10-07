@@ -40,3 +40,8 @@
   align-items: center;
   justify-content: center;
 }
+
+.column-container {
+  display: flex;
+  flex-direction: column;
+}
