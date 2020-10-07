@@ -74,7 +74,7 @@ export class ChatPage implements OnInit {
         const topMessageView = this.messages.find(m => m.isLeft());
         const topMessage = topMessageView ? topMessageView.left : null;
         const newDate = value.createdAt;
-        const shouldScrollToBottom = false;
+        const shouldScrollToBottom = true;
         if (topMessage) {
             const dateMark = this.messages[0];
             if (dateMark.isRight() && ChatPage.sameDate(dateMark.right, newDate)) {
@@ -91,7 +91,11 @@ export class ChatPage implements OnInit {
     addNewMessage(message: Message) {
         const topMessage = this.messages[this.messages.length - 1];
         if (!topMessage || !ChatPage.sameDate(topMessage.left.createdAt, message.createdAt)) {
-            this.messages.unshift(new Either<Message, Date>(null, message.createdAt));
+            this.messages.unshift(
+                new Either<Message, Date>(null, message.createdAt),
+                new Either<Message, Date>(message)
+            );
+            return;
         }
         this.messages.unshift(new Either<Message, Date>(message));
     }

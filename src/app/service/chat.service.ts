@@ -31,23 +31,29 @@ export class ChatService {
 
     queryChat(uid: string): Observable<Chat> {
         return this.mapDtoToProperModel(
-            this.http.get<ChatDTO>(`${this.chatserviceUrl}/chat/${uid}?id=${this.identityService.getSelfId()}`)
+            this.http.get<ChatDTO>(`${this.chatserviceUrl}/chat/${uid}?id=${this.identityService.getSelfId()}`), uid
         );
     }
 
-    mapDtoToProperModel(chatDtoObservable: Observable<ChatDTO>): Observable<Chat> {
+    mapDtoToProperModel(chatDtoObservable: Observable<ChatDTO>, uid?: string): Observable<Chat> {
         return chatDtoObservable.pipe(
             flatMap(e => {
-                    const userObservable = this.userService.queryUser(e.interlocutorId);
-                    return userObservable.pipe(
-                        map(user1 => {
-                            const chat: Chat = {
-                                user: user1,
-                                ...e
-                            };
-                            return chat;
-                        }),
-                        catchError(error => {
+                if (!e) {
+                    e = {
+                        interlocutorId: uid
+                    };
+                }
+                console.log(e);
+                const userObservable = this.userService.queryUser(e.interlocutorId);
+                return userObservable.pipe(
+                    map(user1 => {
+                        const chat: Chat = {
+                            user: user1,
+                            ...e
+                        };
+                        return chat;
+                    }),
+                    catchError(error => {
                             console.log(error);
                             const chat: Chat = {
                                 ...e

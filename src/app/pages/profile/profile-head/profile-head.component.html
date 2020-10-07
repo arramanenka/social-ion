@@ -34,7 +34,7 @@
                 {{getConnectionType()}}
                 <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
             </ion-button>
-            <ion-button slot="end">
+            <ion-button routerLink="/chat/{{user.id}}" slot="end">
                 message
             </ion-button>
         </ion-item>
