@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ChatService} from '../../service/chat.service';
 import {ActivatedRoute} from '@angular/router';
 import {Chat} from '../../../model/chat';
@@ -11,7 +11,7 @@ import {IonContent, IonInfiniteScroll} from '@ionic/angular';
     templateUrl: './chat.page.html',
     styleUrls: ['./chat.page.scss'],
 })
-export class ChatPage implements OnInit, AfterViewInit {
+export class ChatPage implements OnInit {
 
     chat: Chat;
     messages: Either<Message, Date>[] = [];
@@ -36,25 +36,24 @@ export class ChatPage implements OnInit, AfterViewInit {
             const uid = value.get('uid');
             this.chatService.queryChat(uid).subscribe(chat => {
                 this.chat = chat;
-                this.loadPrevious(null, () => {
-                    this.ionScroll.disabled = false;
-                });
+                this.loadPrevious(null);
             });
         });
     }
 
-    ngAfterViewInit(): void {
-    }
-
-
-    loadPrevious(event, onLoaded?: () => void) {
+    loadPrevious(event) {
+        this.ionScroll.disabled = true;
+        let finishedLoading = true;
         const realMessageAmount = this.messages.filter(e => e.isLeft()).length;
         // for now we are sure that messages array is either empty or has date on top
         this.chatService.queryReadChatMessages(this.chat.user.id, realMessageAmount)
-            .subscribe(value => this.appendMessage(value), () => {
+            .subscribe(value => {
+                finishedLoading = false;
+                this.appendMessage(value);
             }, () => {
-                if (onLoaded) {
-                    onLoaded();
+            }, () => {
+                if (!finishedLoading) {
+                    this.ionScroll.disabled = false;
                 }
                 if (event) {
                     event.target.complete();
