@@ -89,13 +89,13 @@ export class ChatPage implements OnInit {
     addNewMessage(message: Message) {
         const topMessage = this.messages[this.messages.length - 1];
         if (!topMessage || !ChatPage.sameDate(topMessage.left.createdAt, message.createdAt)) {
-            this.messages.unshift(
+            this.messages.push(
                 new Either<Message, Date>(null, message.createdAt),
                 new Either<Message, Date>(message)
             );
             return;
         }
-        this.messages.unshift(new Either<Message, Date>(message));
+        this.messages.push(new Either<Message, Date>(message));
     }
 
     sendMessage(event: MouseEvent) {
