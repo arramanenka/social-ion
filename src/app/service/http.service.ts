@@ -1,22 +1,26 @@
-import {Injectable} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class HttpService {
+
+    constructor(private zone: NgZone) {
+    }
+
     public queryJsonStream<R>(url: string): Observable<R> {
         return new Observable(observer => {
             const eventSource = new EventSource(url);
             eventSource.onmessage = e => {
-                observer.next(JSON.parse(e.data));
+                this.zone.run(() => observer.next(JSON.parse(e.data)));
             };
             eventSource.onerror = er => {
                 if (eventSource.readyState !== eventSource.CONNECTING) {
-                    observer.error(er);
+                    this.zone.run(() => observer.error(er));
                 }
                 eventSource.close();
-                observer.complete();
+                this.zone.run(() => observer.complete());
             };
             return () => {
                 eventSource.close();
