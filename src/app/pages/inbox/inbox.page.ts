@@ -18,6 +18,7 @@ export class InboxPage implements OnInit {
     ngOnInit() {
         this.chatService.queryChats().subscribe(chat => {
             this.chats.push(chat);
+            console.log(chat);
         });
     }
 
