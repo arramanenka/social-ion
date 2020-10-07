@@ -39,7 +39,7 @@
                 <ion-textarea autosize maxRows="8"></ion-textarea>
             </ion-col>
             <ion-col size-md="1" size="2">
-                <ion-button fill="clear" class="full-height" style="width: 100%">
+                <ion-button (click)="sendMessage($event)" class="full-height" fill="clear" style="width: 100%">
                     <ion-icon slot="icon-only" name="send-outline"></ion-icon>
                 </ion-button>
             </ion-col>

@@ -65,14 +65,16 @@ export class ChatService {
     }
 
     queryReadChatMessages(uid: string, skipAmount: number): Observable<Message> {
-        const s = `${this.chatserviceUrl}/messages/${uid}?id=${this.identityService.getSelfId()}&skipAmount=${skipAmount}&amount=20`;
-        const url = s;
-        console.log(s);
+        const url = `${this.chatserviceUrl}/messages/${uid}?id=${this.identityService.getSelfId()}&skipAmount=${skipAmount}&amount=20`;
         return this.httpService.queryJsonStream<Message>(url).pipe(
             map(e => {
                 e.createdAt = new Date(e.createdAt);
                 return e;
             })
         );
+    }
+
+    sendMessage(msg: Message, uid: string): Observable<Message> {
+        return this.http.post<Message>(`${this.chatserviceUrl}/message/${uid}?id=${this.identityService.getSelfId()}`, msg);
     }
 }

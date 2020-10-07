@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Chat} from '../../../model/chat';
 import {Message} from '../../../model/message';
 import {IdentityService} from '../../service/identity.service';
-import {IonContent, IonInfiniteScroll} from '@ionic/angular';
+import {IonContent, IonInfiniteScroll, IonTextarea} from '@ionic/angular';
 
 @Component({
     selector: 'app-chat',
@@ -13,13 +13,15 @@ import {IonContent, IonInfiniteScroll} from '@ionic/angular';
 })
 export class ChatPage implements OnInit {
 
+    @ViewChild(IonTextarea)
+    ionTextAra: IonTextarea;
+
     chat: Chat;
     messages: Either<Message, Date>[] = [];
     viewerId: string;
 
     @ViewChild(IonContent)
     content: IonContent;
-
     @ViewChild(IonInfiniteScroll)
     ionScroll: IonInfiniteScroll;
 
@@ -29,6 +31,12 @@ export class ChatPage implements OnInit {
         private identityService: IdentityService
     ) {
         this.viewerId = identityService.getSelfId();
+    }
+
+    private static sameDate(dateMark: Date, newDate: Date) {
+        return dateMark.getDate() === newDate.getDate() &&
+            dateMark.getMonth() === newDate.getMonth() &&
+            dateMark.getFullYear() === newDate.getFullYear();
     }
 
     ngOnInit() {
@@ -49,7 +57,7 @@ export class ChatPage implements OnInit {
         this.chatService.queryReadChatMessages(this.chat.user.id, realMessageAmount)
             .subscribe(value => {
                 finishedLoading = false;
-                this.appendMessage(value);
+                this.addHistoryMessage(value);
             }, () => {
             }, () => {
                 if (!finishedLoading) {
@@ -61,7 +69,7 @@ export class ChatPage implements OnInit {
             });
     }
 
-    appendMessage(value: Message) {
+    addHistoryMessage(value: Message) {
         // for now we are sure that messages array is either empty or has date on top
         const topMessageView = this.messages.find(m => m.isLeft());
         const topMessage = topMessageView ? topMessageView.left : null;
@@ -69,20 +77,36 @@ export class ChatPage implements OnInit {
         const shouldScrollToBottom = false;
         if (topMessage) {
             const dateMark = this.messages[0];
-            if (dateMark.isRight()) {
-                if (
-                    dateMark.right.getDate() === newDate.getDate() &&
-                    dateMark.right.getMonth() === newDate.getMonth() &&
-                    dateMark.right.getFullYear() === newDate.getFullYear()
-                ) {
-                    this.messages.shift();
-                }
+            if (dateMark.isRight() && ChatPage.sameDate(dateMark.right, newDate)) {
+                this.messages.shift();
             }
         }
         this.messages.unshift(new Either<Message, Date>(value));
         this.messages.unshift(new Either<Message, Date>(null, newDate));
         if (shouldScrollToBottom) {
             this.content.scrollToBottom().then();
+        }
+    }
+
+    addNewMessage(message: Message) {
+        const topMessage = this.messages[this.messages.length - 1];
+        if (!topMessage || !ChatPage.sameDate(topMessage.left.createdAt, message.createdAt)) {
+            this.messages.unshift(new Either<Message, Date>(null, message.createdAt));
+        }
+        this.messages.unshift(new Either<Message, Date>(message));
+    }
+
+    sendMessage(event: MouseEvent) {
+        event.stopPropagation();
+        const actualMessage = this.ionTextAra.value.trim();
+        if (actualMessage) {
+            const msg: Message = {
+                text: actualMessage,
+            };
+            this.chatService.sendMessage(msg, this.chat.user.id).subscribe(v => {
+                v.createdAt = new Date(v.createdAt);
+                this.addNewMessage(v);
+            });
         }
     }
 }
