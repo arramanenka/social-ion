@@ -51,16 +51,14 @@ export class ChatPage implements OnInit {
 
     loadPrevious(event) {
         this.ionScroll.disabled = true;
-        let finishedLoading = true;
         const realMessageAmount = this.messages.filter(e => e.isLeft()).length;
         // for now we are sure that messages array is either empty or has date on top
         this.chatService.queryReadChatMessages(this.chat.user.id, realMessageAmount)
             .subscribe(value => {
-                finishedLoading = false;
                 this.addHistoryMessage(value);
             }, () => {
             }, () => {
-                if (!finishedLoading) {
+                if (this.messages.filter(e => e.isLeft()).length >= 20) {
                     this.ionScroll.disabled = false;
                 }
                 if (event) {

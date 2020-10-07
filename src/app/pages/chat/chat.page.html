@@ -3,17 +3,11 @@
         <ion-buttons slot="start">
             <ion-back-button defaultHref="inbox"></ion-back-button>
         </ion-buttons>
-        <ion-grid>
-            <ion-row class="ion-justify-content-start">
-                <ion-col size="auto">
-                    <app-avatar *ngIf="chat" [avatarUrl]="chat.user.avatarUrl"
-                                [routerLink]="'/profile/'+ chat.user.id"></app-avatar>
-                </ion-col>
-                <ion-col *ngIf="chat" size="auto">
-                    {{chat.user.name}}
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+        <ion-item *ngIf="chat" lines="none">
+            <app-avatar [avatarUrl]="chat.user.avatarUrl" [routerLink]="'/profile/'+ chat.user.id"
+                        slot="start"></app-avatar>
+            {{chat.user.name}}
+        </ion-item>
     </ion-toolbar>
 </ion-header>
 
