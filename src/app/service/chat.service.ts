@@ -64,8 +64,10 @@ export class ChatService {
         );
     }
 
-    queryReadChatMessages(uid: string): Observable<Message> {
-        const url = `${this.chatserviceUrl}/messages/${uid}?id=${this.identityService.getSelfId()}`;
+    queryReadChatMessages(uid: string, skipAmount: number): Observable<Message> {
+        const s = `${this.chatserviceUrl}/messages/${uid}?id=${this.identityService.getSelfId()}&skipAmount=${skipAmount}&amount=20`;
+        const url = s;
+        console.log(s);
         return this.httpService.queryJsonStream<Message>(url).pipe(
             map(e => {
                 e.createdAt = new Date(e.createdAt);

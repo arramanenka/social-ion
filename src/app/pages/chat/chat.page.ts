@@ -48,15 +48,18 @@ export class ChatPage implements OnInit, AfterViewInit {
 
 
     loadPrevious(event, onLoaded?: () => void) {
+        const realMessageAmount = this.messages.filter(e => e.isLeft()).length;
         // for now we are sure that messages array is either empty or has date on top
-        this.chatService.queryReadChatMessages(this.chat.user.id).subscribe(value => this.appendMessage(value), null, () => {
-            if (onLoaded) {
-                onLoaded();
-            }
-            if (event) {
-                event.target.complete();
-            }
-        });
+        this.chatService.queryReadChatMessages(this.chat.user.id, realMessageAmount)
+            .subscribe(value => this.appendMessage(value), () => {
+            }, () => {
+                if (onLoaded) {
+                    onLoaded();
+                }
+                if (event) {
+                    event.target.complete();
+                }
+            });
     }
 
     appendMessage(value: Message) {
