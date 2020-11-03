@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {ChatService} from '../../service/chat.service';
 import {Chat} from '../../../model/chat';
 
@@ -11,7 +11,8 @@ export class InboxPage implements OnInit {
     chats: Chat[] = [];
 
     constructor(
-        private chatService: ChatService
+        private chatService: ChatService,
+        private ngZone: NgZone
     ) {
     }
 

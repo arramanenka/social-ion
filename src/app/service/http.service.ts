@@ -13,7 +13,7 @@ export class HttpService {
         return new Observable(observer => {
             const eventSource = new EventSource(url);
             eventSource.onmessage = e => {
-                this.zone.run(() => observer.next(JSON.parse(e.data)));
+                observer.next(JSON.parse(e.data));
             };
             eventSource.onerror = er => {
                 if (eventSource.readyState !== eventSource.CONNECTING) {
