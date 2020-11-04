@@ -111,6 +111,10 @@ export class ChatPage implements OnInit {
             });
         }
     }
+
+    scrollToBottom() {
+        this.content.scrollToBottom(1000).then();
+    }
 }
 
 export class Either<T, K> {
