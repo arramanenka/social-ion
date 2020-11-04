@@ -82,4 +82,14 @@ export class ChatService {
     sendMessage(msg: Message, uid: string): Observable<Message> {
         return this.http.post<Message>(`${this.chatserviceUrl}/message/${uid}?id=${this.identityService.getSelfId()}`, msg);
     }
+
+    queryUnReadChatMessages(uid: string) {
+        const url = `${this.chatserviceUrl}/messages/${uid}/unread?id=${this.identityService.getSelfId()}&amount=5`;
+        return this.httpService.queryJsonStream<Message>(url).pipe(
+            map(e => {
+                e.createdAt = new Date(e.createdAt);
+                return e;
+            })
+        );
+    }
 }

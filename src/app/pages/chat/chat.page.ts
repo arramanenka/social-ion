@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ChatService} from '../../service/chat.service';
 import {ActivatedRoute} from '@angular/router';
 import {Chat} from '../../../model/chat';
@@ -11,7 +11,7 @@ import {IonContent, IonInfiniteScroll, IonTextarea} from '@ionic/angular';
     templateUrl: './chat.page.html',
     styleUrls: ['./chat.page.scss'],
 })
-export class ChatPage implements OnInit {
+export class ChatPage implements OnInit, OnDestroy {
 
     @ViewChild(IonTextarea)
     ionTextAra: IonTextarea;
@@ -19,6 +19,7 @@ export class ChatPage implements OnInit {
     chat: Chat;
     messages: Either<Message, Date>[] = [];
     viewerId: string;
+    newMessageLoad = false;
 
     @ViewChild(IonContent)
     content: IonContent;
@@ -48,6 +49,8 @@ export class ChatPage implements OnInit {
             }, () => {
             }, () => {
                 this.scrollToBottom(0);
+                this.newMessageLoad = true;
+                this.loadNewMessages();
             });
         });
     }
@@ -117,6 +120,21 @@ export class ChatPage implements OnInit {
 
     scrollToBottom(duration: number) {
         this.content.scrollToBottom(duration).then();
+    }
+
+    ngOnDestroy(): void {
+        this.newMessageLoad = false;
+    }
+
+    private loadNewMessages() {
+        const reloadFun = () => {
+            setTimeout(() => this.loadNewMessages(), 500);
+        };
+        if (this.newMessageLoad) {
+            this.chatService.queryUnReadChatMessages(this.chat.user.id).subscribe(m => {
+                this.addNewMessage(m);
+            }, () => reloadFun(), () => reloadFun());
+        }
     }
 }
 
