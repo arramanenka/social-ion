@@ -4,28 +4,26 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
     <ion-grid class="full-height">
         <ion-row class="full-height">
             <ion-col size-md="4" offset-md="4" class="full-height">
-                <ion-list class="ion-no-padding full-height">
-                    <ion-item *ngFor="let chat of chats" routerLink="/chat/{{chat.user.id}}">
-                        <app-avatar (click)="stopPropagation($event)" [avatarUrl]="chat.user.avatarUrl"
-                                    routerLink="/profile/{{chat.user.id}}"
-                                    slot="start"></app-avatar>
-                        <ion-label>
-                            <h1>{{chat.user.name}}</h1>
-                            <p>{{chat.lastMessageText}}</p>
-                        </ion-label>
-                        <div class="column-container" slot="end">
-                            <div *ngIf="chat.unreadCount" class="centered-container">
-                                <ion-badge color="medium"
-                                           slot="end">{{chat.unreadCount}}</ion-badge>
-                            </div>
-                            {{chat.lastMessage | date: 'H:mm'}}
+                <ion-item *ngFor="let chat of chats" routerLink="/chat/{{chat.user.id}}">
+                    <app-avatar (click)="stopPropagation($event)" [avatarUrl]="chat.user.avatarUrl"
+                                routerLink="/profile/{{chat.user.id}}"
+                                slot="start"></app-avatar>
+                    <ion-label>
+                        <h1>{{chat.user.name}}</h1>
+                        <p>{{chat.lastMessageText}}</p>
+                    </ion-label>
+                    <div class="column-container" slot="end">
+                        <div *ngIf="chat.unreadCount" class="centered-container">
+                            <ion-badge color="medium"
+                                       slot="end">{{chat.unreadCount}}</ion-badge>
                         </div>
-                    </ion-item>
-                </ion-list>
+                        {{chat.lastMessage | date: 'H:mm'}}
+                    </div>
+                </ion-item>
             </ion-col>
         </ion-row>
     </ion-grid>
