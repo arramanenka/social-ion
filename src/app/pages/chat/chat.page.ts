@@ -45,6 +45,9 @@ export class ChatPage implements OnInit {
             this.chatService.queryChat(uid).subscribe(chat => {
                 this.chat = chat;
                 this.loadPrevious(null);
+            }, () => {
+            }, () => {
+                this.scrollToBottom(0);
             });
         });
     }
@@ -112,8 +115,8 @@ export class ChatPage implements OnInit {
         }
     }
 
-    scrollToBottom() {
-        this.content.scrollToBottom(1000).then();
+    scrollToBottom(duration: number) {
+        this.content.scrollToBottom(duration).then();
     }
 }
 
