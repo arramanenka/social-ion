@@ -24,28 +24,30 @@ export class InboxPage implements OnInit, OnDestroy {
 
     loadChats() {
         if (this.shouldUpdateChats) {
-            const newChats: Chat[] = [];
             this.chatService.queryChats().subscribe(chat => {
-                newChats.push(chat);
+                this.ngZone.run(() => {
+                    const index = this.chats.findIndex((_chat, _index, _chats) => _chat.user.id === chat.user.id);
+                    if (index < 0) {
+                        this.chats.unshift(chat);
+                        return;
+                    }
+                    const storedChat = this.chats[index];
+                    storedChat.user.bio = chat.user.bio;
+                    storedChat.user.avatarUrl = chat.user.avatarUrl;
+                    storedChat.user.name = chat.user.name;
+                    storedChat.lastMessage = chat.lastMessage;
+                    storedChat.lastMessageText = chat.lastMessageText;
+                    storedChat.unreadCount = chat.unreadCount;
+                });
+
             }, () => {
             }, () => {
                 this.ngZone.run(() => {
-                    newChats.sort((a, b) => a.lastMessage < b.lastMessage ? 1 : -1);
-                    this.chats.unshift(...newChats);
-                    const duplicate = new Set();
-                    let i = 0;
-                    this.chats.forEach(c => {
-                        if (duplicate.has(c.user.id)) {
-                            this.chats.splice(i, i + 1);
-                            return;
-                        }
-                        duplicate.add(c.user.id);
-                        i++;
-                    });
+                    this.chats.sort((a, b) => a.lastMessage < b.lastMessage ? 1 : -1);
                 });
                 setTimeout(() => {
                     this.loadChats();
-                }, 10000);
+                }, 1000);
             });
         }
     }
