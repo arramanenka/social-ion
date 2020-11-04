@@ -101,7 +101,16 @@ export class ChatPage implements OnInit, OnDestroy {
             );
             return;
         }
-        this.messages.push(new Either<Message, Date>(message));
+        this.content.getScrollElement().then(v => {
+            const shouldScroll = v.scrollHeight - v.scrollTop - v.clientHeight === 0;
+            console.log(shouldScroll, v.scrollHeight, v.scrollTop, v.clientHeight);
+            this.messages.push(new Either<Message, Date>(message));
+            if (shouldScroll) {
+                setTimeout(() => this.scrollToBottom(300), 100);
+            }
+        }, () => {
+            this.messages.push(new Either<Message, Date>(message));
+        });
     }
 
     sendMessage(event: MouseEvent) {
