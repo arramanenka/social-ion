@@ -18,11 +18,11 @@
                             <p>{{chat.lastMessageText}}</p>
                         </ion-label>
                         <div class="column-container" slot="end">
-                            {{chat.lastMessage | date: 'H:mm'}}
-                            <div class="centered-container">
-                                <ion-badge *ngIf="chat.unreadCount" color="medium"
+                            <div *ngIf="chat.unreadCount" class="centered-container">
+                                <ion-badge color="medium"
                                            slot="end">{{chat.unreadCount}}</ion-badge>
                             </div>
+                            {{chat.lastMessage | date: 'H:mm'}}
                         </div>
                     </ion-item>
                 </ion-list>
