@@ -50,7 +50,7 @@ export class ChatPage implements OnInit, OnDestroy {
             }, () => {
                 this.scrollToBottom(0);
                 this.newMessageLoad = true;
-                this.loadNewMessages();
+                setTimeout(this.loadNewMessages, 1000);
             });
         });
     }
