@@ -115,11 +115,13 @@ export class ChatPage implements OnInit, OnDestroy {
 
     sendMessage(event: MouseEvent) {
         event.stopPropagation();
-        const actualMessage = this.ionTextAra.value.trim();
+        this.ionTextAra.value = this.ionTextAra.value.trim();
+        const actualMessage = this.ionTextAra.value;
         if (actualMessage) {
             const msg: Message = {
                 text: actualMessage,
             };
+            this.ionTextAra.value = '';
             this.chatService.sendMessage(msg, this.chat.user.id).subscribe(v => {
                 v.createdAt = new Date(v.createdAt);
                 this.addNewMessage(v);
