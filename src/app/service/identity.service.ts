@@ -6,12 +6,15 @@ import {Router} from '@angular/router';
 })
 export class IdentityService {
 
-    private selfId = 'a';
+    private selfId = null;
 
     constructor(private router: Router) {
     }
 
     getSelfId() {
+        if (!this.selfId) {
+            this.selfId = localStorage.getItem('id');
+        }
         return this.selfId;
     }
 
@@ -19,11 +22,13 @@ export class IdentityService {
         return this.getSelfId() === uid;
     }
 
-    setId(name: string) {
-        this.selfId = name;
+    setId(id: string) {
+        this.selfId = id;
+        localStorage.setItem('id', id);
     }
 
     logout() {
+        localStorage.removeItem('id');
         this.selfId = null;
         this.router.navigateByUrl('login').then();
     }
