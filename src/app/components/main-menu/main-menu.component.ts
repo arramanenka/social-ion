@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Platform, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
 import {ChatService} from '../../service/chat.service';
 
@@ -6,7 +6,7 @@ import {ChatService} from '../../service/chat.service';
     selector: 'app-main-menu',
     templateUrl: './main-menu.component.html',
 })
-export class MainMenuComponent implements OnInit, ViewDidEnter, ViewDidLeave {
+export class MainMenuComponent implements ViewDidEnter, ViewDidLeave {
 
     tabPlacement: string;
     updateNotificationLoop = false;
@@ -21,11 +21,6 @@ export class MainMenuComponent implements OnInit, ViewDidEnter, ViewDidLeave {
         } else {
             this.tabPlacement = 'bottom';
         }
-    }
-
-    ngOnInit() {
-        this.updateNotificationLoop = true;
-        this.loadNotifications();
     }
 
     loadNotifications(): void {
@@ -43,6 +38,7 @@ export class MainMenuComponent implements OnInit, ViewDidEnter, ViewDidLeave {
 
     ionViewDidEnter(): void {
         this.updateNotificationLoop = true;
+        this.loadNotifications();
     }
 
     ionViewDidLeave(): void {

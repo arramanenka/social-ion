@@ -1,12 +1,13 @@
-import {Component, NgZone, OnDestroy, OnInit} from '@angular/core';
+import {Component, NgZone} from '@angular/core';
 import {ChatService} from '../../service/chat.service';
 import {Chat} from '../../../model/chat';
+import {ViewDidEnter, ViewDidLeave} from '@ionic/angular';
 
 @Component({
     selector: 'app-inbox',
     templateUrl: './inbox.page.html',
 })
-export class InboxPage implements OnInit, OnDestroy {
+export class InboxPage implements ViewDidEnter, ViewDidLeave {
 
     chats: Chat[] = [];
     shouldUpdateChats;
@@ -15,11 +16,6 @@ export class InboxPage implements OnInit, OnDestroy {
         private chatService: ChatService,
         private ngZone: NgZone
     ) {
-    }
-
-    ngOnInit() {
-        this.shouldUpdateChats = true;
-        this.loadChats();
     }
 
     loadChats() {
@@ -56,9 +52,12 @@ export class InboxPage implements OnInit, OnDestroy {
         event.stopPropagation();
     }
 
-    ngOnDestroy(): void {
-        this.shouldUpdateChats = false;
+    ionViewDidEnter(): void {
+        this.shouldUpdateChats = true;
+        this.loadChats();
     }
 
-
+    ionViewDidLeave(): void {
+        this.shouldUpdateChats = false;
+    }
 }
