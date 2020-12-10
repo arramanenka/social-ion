@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Chat, ChatDTO} from '../../model/chat';
+import {Chat, ChatDTO, ChatsMetaInf} from '../../model/chat';
 import {IdentityService} from './identity.service';
 import {BehaviorSubject, empty, Observable} from 'rxjs';
 import {Message} from '../../model/message';
@@ -38,21 +38,21 @@ export class ChatService {
     mapDtoToProperModel(chatDtoObservable: Observable<ChatDTO>, uid?: string): Observable<Chat> {
         return chatDtoObservable.pipe(
             flatMap(e => {
-                if (!e) {
-                    e = {
-                        interlocutorId: uid
-                    };
-                }
-                const userObservable = this.userService.queryUser(e.interlocutorId);
-                return userObservable.pipe(
-                    map(user1 => {
-                        const chat: Chat = {
-                            user: user1,
-                            ...e
+                    if (!e) {
+                        e = {
+                            interlocutorId: uid
                         };
-                        return chat;
-                    }),
-                    catchError(error => {
+                    }
+                    const userObservable = this.userService.queryUser(e.interlocutorId);
+                    return userObservable.pipe(
+                        map(user1 => {
+                            const chat: Chat = {
+                                user: user1,
+                                ...e
+                            };
+                            return chat;
+                        }),
+                        catchError(error => {
                             console.log(error);
                             const chat: Chat = {
                                 ...e
@@ -91,5 +91,9 @@ export class ChatService {
                 return e;
             })
         );
+    }
+
+    queryChatMeta(): Observable<ChatsMetaInf> {
+        return this.http.get<ChatsMetaInf>(`${this.chatserviceUrl}/chats/metaInf?id=${this.identityService.getSelfId()}`);
     }
 }

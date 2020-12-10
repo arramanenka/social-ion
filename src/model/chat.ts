@@ -14,3 +14,8 @@ export interface ChatDTO {
     unreadCount?: number;
     lastMessageText?: string;
 }
+
+export interface ChatsMetaInf {
+    chatCount?: number;
+    unreadAmount?: number;
+}

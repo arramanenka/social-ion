@@ -4,6 +4,7 @@
         <ion-tab-button tab="inbox">
             <ion-icon name="chatbubbles-outline"></ion-icon>
             <ion-label>Inbox</ion-label>
+            <ion-badge *ngIf="unreadAmount">{{unreadAmount}}</ion-badge>
         </ion-tab-button>
         <ion-tab-button tab="search">
             <ion-icon name="search"></ion-icon>
