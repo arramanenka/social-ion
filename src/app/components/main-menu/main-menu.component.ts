@@ -1,15 +1,15 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Platform} from '@ionic/angular';
+import {Component, OnInit} from '@angular/core';
+import {Platform, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
 import {ChatService} from '../../service/chat.service';
 
 @Component({
     selector: 'app-main-menu',
     templateUrl: './main-menu.component.html',
 })
-export class MainMenuComponent implements OnInit, OnDestroy {
+export class MainMenuComponent implements OnInit, ViewDidEnter, ViewDidLeave {
 
     tabPlacement: string;
-    updateNotificationLoop = true;
+    updateNotificationLoop = false;
     unreadAmount = 0;
 
     constructor(
@@ -41,8 +41,11 @@ export class MainMenuComponent implements OnInit, OnDestroy {
         update();
     }
 
-    ngOnDestroy(): void {
-        console.log('destroying');
+    ionViewDidEnter(): void {
+        this.updateNotificationLoop = true;
+    }
+
+    ionViewDidLeave(): void {
         this.updateNotificationLoop = false;
     }
 }
