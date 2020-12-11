@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {User} from '../../model/user';
+import {User, UserRecommendation} from '../../model/user';
 import {IdentityService} from './identity.service';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
@@ -81,5 +81,9 @@ export class UserService {
 
     findAllByNicknameStart(nicknameStart: string): Observable<User> {
         return this.httpService.queryJsonStream(`${this.userviceHost}/users/nickname/${nicknameStart}?id=${this.identityService.getSelfId()}`);
+    }
+
+    queryRecommendations(): Observable<UserRecommendation> {
+        return this.httpService.queryJsonStream(`${this.userviceHost}/users/recommendations?id=${this.identityService.getSelfId()}`);
     }
 }

@@ -14,3 +14,8 @@ export interface UserMetaInf {
     queryingPersonBlacklisted?: boolean;
     followingQueryingPerson?: boolean;
 }
+
+export interface UserRecommendation {
+    user: User;
+    depthOfConnection: number;
+}

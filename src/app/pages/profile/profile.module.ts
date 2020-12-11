@@ -11,6 +11,7 @@ import {ProfileHeadComponent} from './profile-head/profile-head.component';
 import {CommonComponentModule} from '../../components/common-component.module';
 import {ProfileEditComponent} from './profile-edit/profile-edit.component';
 import {AutosizeModule} from 'ngx-autosize';
+import {UserRecommendationsComponent} from './user-recommendations/user-recommendations.component';
 
 @NgModule({
     imports: [
@@ -22,7 +23,7 @@ import {AutosizeModule} from 'ngx-autosize';
         AutosizeModule,
         ReactiveFormsModule
     ],
-    declarations: [ProfilePage, ProfileHeadComponent, ProfileEditComponent]
+    declarations: [ProfilePage, ProfileHeadComponent, ProfileEditComponent, UserRecommendationsComponent]
 })
 export class ProfilePageModule {
 }
