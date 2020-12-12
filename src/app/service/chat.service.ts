@@ -23,9 +23,11 @@ export class ChatService {
     ) {
     }
 
-    queryChats(): Observable<Chat> {
+    queryChats(ignoredProfiles?: string[]): Observable<Chat> {
         return this.mapDtoToProperModel(
-            this.httpService.queryJsonStream<ChatDTO>(`${this.chatserviceUrl}/chats?id=${this.identityService.getSelfId()}`)
+            this.httpService.queryJsonStream<ChatDTO>(`${this.chatserviceUrl}/chats?id=${this.identityService.getSelfId()}`),
+            null,
+            ignoredProfiles
         );
     }
 
@@ -35,24 +37,27 @@ export class ChatService {
         );
     }
 
-    mapDtoToProperModel(chatDtoObservable: Observable<ChatDTO>, uid?: string): Observable<Chat> {
+    mapDtoToProperModel(chatDtoObservable: Observable<ChatDTO>, uid?: string, ignoredProfiles?: string[]): Observable<Chat> {
         return chatDtoObservable.pipe(
             flatMap(e => {
-                    if (!e) {
-                        e = {
-                            interlocutorId: uid
+                if (!e) {
+                    e = {
+                        interlocutorId: uid
+                    };
+                }
+                if (ignoredProfiles && ignoredProfiles.find(ignoredProfile => ignoredProfile === e.interlocutorId)) {
+                    return new BehaviorSubject(e);
+                }
+                const userObservable = this.userService.queryUser(e.interlocutorId);
+                return userObservable.pipe(
+                    map(user1 => {
+                        const chat: Chat = {
+                            user: user1,
+                            ...e
                         };
-                    }
-                    const userObservable = this.userService.queryUser(e.interlocutorId);
-                    return userObservable.pipe(
-                        map(user1 => {
-                            const chat: Chat = {
-                                user: user1,
-                                ...e
-                            };
-                            return chat;
-                        }),
-                        catchError(error => {
+                        return chat;
+                    }),
+                    catchError(error => {
                             console.log(error);
                             const chat: Chat = {
                                 ...e

@@ -1,6 +1,7 @@
 import {User} from './user';
 
 export interface Chat {
+    interlocutorId?: string;
     user?: User;
     lastMessage?: Date;
     unreadCount?: number;

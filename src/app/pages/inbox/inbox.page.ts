@@ -20,17 +20,15 @@ export class InboxPage implements ViewDidEnter, ViewDidLeave {
 
     loadChats() {
         if (this.shouldUpdateChats) {
-            this.chatService.queryChats().subscribe(chat => {
+            const ignoredProfiles = this.chats.map(e => e.user.id);
+            this.chatService.queryChats(ignoredProfiles).subscribe(chat => {
                 this.ngZone.run(() => {
-                    const index = this.chats.findIndex((_chat, _index, _chats) => _chat.user.id === chat.user.id);
+                    const index = this.chats.findIndex((_chat, _index, _chats) => _chat.interlocutorId === chat.interlocutorId);
                     if (index < 0) {
                         this.chats.unshift(chat);
                         return;
                     }
                     const storedChat = this.chats[index];
-                    storedChat.user.bio = chat.user.bio;
-                    storedChat.user.avatarUrl = chat.user.avatarUrl;
-                    storedChat.user.name = chat.user.name;
                     storedChat.lastMessage = chat.lastMessage;
                     storedChat.lastMessageText = chat.lastMessageText;
                     storedChat.unreadCount = chat.unreadCount;
