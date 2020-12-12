@@ -1,4 +1,4 @@
-<ion-item (click)="navigateToProfile($event)" *ngIf="!isOwnMiniature">
+<ion-item (click)="navigateToProfile($event)" *ngIf="!isOwnMiniature" class="router-cursor">
     <app-avatar [avatarUrl]="user.avatarUrl" slot="start"></app-avatar>
     <ion-label>{{user.name}}</ion-label>
     <div *ngIf="user.userMeta" slot="end">

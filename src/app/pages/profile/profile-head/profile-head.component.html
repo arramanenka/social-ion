@@ -3,12 +3,12 @@
         <ion-col>
             <app-avatar [avatarUrl]="user.avatarUrl"></app-avatar>
         </ion-col>
-        <ion-col (click)="navigateToFollowers($event)">
+        <ion-col (click)="navigateToFollowers($event)" class="router-cursor">
             <div class="centered-container">
                 <ion-text>{{user.followersAmount}} followers</ion-text>
             </div>
         </ion-col>
-        <ion-col (click)="navigateToFollowing($event)">
+        <ion-col (click)="navigateToFollowing($event)" class="router-cursor">
             <div class="centered-container">
                 <ion-text>{{user.followingAmount}} following</ion-text>
             </div>
