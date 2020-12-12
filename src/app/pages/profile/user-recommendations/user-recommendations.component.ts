@@ -5,7 +5,6 @@ import {UserRecommendation} from '../../../../model/user';
 @Component({
     selector: 'app-user-recommendations',
     templateUrl: './user-recommendations.component.html',
-    styleUrls: ['./user-recommendations.component.scss'],
 })
 export class UserRecommendationsComponent implements OnInit {
 
@@ -17,6 +16,7 @@ export class UserRecommendationsComponent implements OnInit {
         spaceBetween: 2,
         centerInsufficientSlides: true
     };
+    hidden = false;
 
     constructor(
         private userService: UserService

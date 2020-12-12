@@ -1,16 +1,28 @@
 <div *ngIf="users">
-    <p class="slides-header">People you might know</p>
-    <ion-slides [options]="slidesOpts" style="width: 100%">
-        <ion-slide *ngFor="let u of users" class="user-slide">
-            <ion-card routerLink="/profile/{{u.user.id}}">
-                <ion-card-content>
-                    <div class="centered-container">
-                        <app-avatar [avatarUrl]="u.user.avatarUrl"></app-avatar>
-                    </div>
-                    <p>{{u.user.name}}</p>
-                    <p>{{u.depthOfConnection}}nd degree collection</p>
-                </ion-card-content>
-            </ion-card>
-        </ion-slide>
-    </ion-slides>
+    <ion-card *ngIf="!hidden">
+        <ion-fab horizontal="end">
+            <ion-fab-button (click)="hidden = true" color="transparent">
+                <ion-icon name="close-outline"></ion-icon>
+            </ion-fab-button>
+        </ion-fab>
+        <ion-card-header class="ion-text-center">People you might know</ion-card-header>
+        <ion-card-content>
+            <ion-slides [options]="slidesOpts" style="width: 100%">
+                <ion-slide *ngFor="let u of users" class="user-slide">
+                    <ion-card routerLink="/profile/{{u.user.id}}">
+                        <ion-card-content>
+                            <div class="centered-container">
+                                <app-avatar [avatarUrl]="u.user.avatarUrl"></app-avatar>
+                            </div>
+                            <p>{{u.user.name}}</p>
+                            <p>{{u.depthOfConnection}}nd degree collection</p>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-slide>
+            </ion-slides>
+        </ion-card-content>
+    </ion-card>
+    <ion-button (click)="hidden = false" *ngIf="hidden" class="full-width ion-padding">
+        <ion-icon name="chevron-down-outline" slot="icon-only"></ion-icon>
+    </ion-button>
 </div>
