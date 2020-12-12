@@ -43,7 +43,7 @@ export class ProfileEditComponent implements OnInit {
     saveProfile(event: MouseEvent) {
         event.stopPropagation();
         let bio = this.textArea.value;
-        if (bio) {
+        if (bio || this.avatarChanged) {
             bio = bio.trim();
             if (this.user.bio !== bio || this.avatarChanged) {
                 this.user.bio = bio;
