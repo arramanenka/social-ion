@@ -1,6 +1,6 @@
-<ion-item *ngIf="!isOwnMiniature">
-    <app-avatar [avatarUrl]="user.avatarUrl" routerLink="/profile/{{user.id}}" slot="start"></app-avatar>
-    <ion-label routerLink="/profile/{{user.id}}">{{user.name}}</ion-label>
+<ion-item (click)="navigateToProfile($event)" *ngIf="!isOwnMiniature">
+    <app-avatar [avatarUrl]="user.avatarUrl" slot="start"></app-avatar>
+    <ion-label>{{user.name}}</ion-label>
     <div *ngIf="user.userMeta" slot="end">
         <div *ngIf="!blacklistMiniature && !user.userMeta.blacklistedByQueryingPerson" class="centered-container">
             <ion-button (click)="unfollow($event)" *ngIf="user.userMeta.followedByQueryingPerson" fill="clear">
