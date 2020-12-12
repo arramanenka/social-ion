@@ -27,7 +27,7 @@
                         <app-profile-head [user]="user" [isOwnProfile]="isOwnProfile"></app-profile-head>
                     </ion-card-content>
                 </ion-card>
-                <app-user-recommendations *ngIf="!isOwnProfile"></app-user-recommendations>
+                <app-user-recommendations *ngIf="!isOwnProfile" [excludedIds]="[user.id]"></app-user-recommendations>
             </ion-col>
         </ion-row>
     </ion-grid>

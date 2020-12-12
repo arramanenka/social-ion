@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {UserService} from '../../../service/user.service';
 import {UserRecommendation} from '../../../../model/user';
 
@@ -9,6 +9,8 @@ import {UserRecommendation} from '../../../../model/user';
 })
 export class UserRecommendationsComponent implements OnInit {
 
+    @Input()
+    excludedIds: string[] = [];
     users: UserRecommendation[] = [];
     slidesOpts = {
         slidesPerView: 3,
@@ -24,7 +26,9 @@ export class UserRecommendationsComponent implements OnInit {
     ngOnInit() {
         this.userService.queryRecommendations().subscribe(
             e => {
-                this.users.unshift(e);
+                if (!this.excludedIds.find(id => e.user.id === id)) {
+                    this.users.unshift(e);
+                }
             }
         );
     }

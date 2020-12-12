@@ -2,7 +2,7 @@
     <p class="slides-header">People you might know</p>
     <ion-slides [options]="slidesOpts" style="width: 100%">
         <ion-slide *ngFor="let u of users" class="user-slide">
-            <ion-card>
+            <ion-card routerLink="/profile/{{u.user.id}}">
                 <ion-card-content>
                     <div class="centered-container">
                         <app-avatar [avatarUrl]="u.user.avatarUrl"></app-avatar>
