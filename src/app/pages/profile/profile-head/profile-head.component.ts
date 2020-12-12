@@ -4,6 +4,7 @@ import {UserService} from '../../../service/user.service';
 import {ActionSheetController, AlertController, ModalController} from '@ionic/angular';
 import {ActionSheetButton} from '@ionic/core/dist/types/components/action-sheet/action-sheet-interface';
 import {ProfileEditComponent} from '../profile-edit/profile-edit.component';
+import {NavigationService} from '../../../service/navigation.service';
 
 @Component({
     selector: 'app-profile-head',
@@ -18,7 +19,8 @@ export class ProfileHeadComponent implements OnInit {
         private userService: UserService,
         private actionSheetController: ActionSheetController,
         private alertController: AlertController,
-        private modalController: ModalController
+        private modalController: ModalController,
+        private navigationService: NavigationService
     ) {
     }
 
@@ -117,5 +119,13 @@ export class ProfileHeadComponent implements OnInit {
                 user: this.user
             }
         }).then(model => model.present());
+    }
+
+    navigateToFollowers(event: MouseEvent) {
+        this.navigationService.navigateToFollowers(event, this.user);
+    }
+
+    navigateToFollowing(event: MouseEvent) {
+        this.navigationService.navigateToFollowings(event, this.user);
     }
 }

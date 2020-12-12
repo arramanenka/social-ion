@@ -3,7 +3,7 @@ import {User} from '../../../model/user';
 import {UserService} from '../../service/user.service';
 import {AlertController} from '@ionic/angular';
 import {IdentityService} from '../../service/identity.service';
-import {Router} from '@angular/router';
+import {NavigationService} from '../../service/navigation.service';
 
 @Component({
     selector: 'app-user-miniature',
@@ -22,7 +22,7 @@ export class UserMiniatureComponent implements OnInit {
         private identityService: IdentityService,
         private userService: UserService,
         private alertController: AlertController,
-        private router: Router
+        private navigationService: NavigationService
     ) {
     }
 
@@ -90,7 +90,6 @@ export class UserMiniatureComponent implements OnInit {
     }
 
     navigateToProfile(event: MouseEvent) {
-        event.stopPropagation();
-        this.router.navigateByUrl('/profile/' + this.user.id).then();
+        this.navigationService.navigateToProfile(event, this.user);
     }
 }
