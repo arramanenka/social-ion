@@ -59,5 +59,6 @@ export class InboxPage implements ViewDidEnter, ViewDidLeave {
 
     ionViewDidLeave(): void {
         this.shouldUpdateChats = false;
+        this.chats = [];
     }
 }

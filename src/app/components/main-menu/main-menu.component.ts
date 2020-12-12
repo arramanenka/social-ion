@@ -43,5 +43,6 @@ export class MainMenuComponent implements ViewDidEnter, ViewDidLeave {
 
     ionViewDidLeave(): void {
         this.updateNotificationLoop = false;
+        this.unreadAmount = 0;
     }
 }

@@ -138,6 +138,7 @@ export class ChatPage implements OnInit, ViewDidLeave, ViewDidEnter {
 
     ionViewDidLeave(): void {
         this.newMessageLoad = false;
+        this.messages = [];
     }
 
     private loadNewMessages() {
