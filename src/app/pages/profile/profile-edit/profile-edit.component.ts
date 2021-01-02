@@ -66,7 +66,7 @@ export class ProfileEditComponent implements OnInit {
         });
     }
 
-    onImagePicked(event: Event) {
+    onImagePicked(event: CustomEvent) {
         this.imageFile = event.detail.target.files[0];
     }
 }
