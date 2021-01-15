@@ -13,7 +13,7 @@ export class UserRecommendationsComponent implements OnInit {
     users: UserRecommendation[] = [];
     slidesOpts = {
         slidesPerView: 3,
-        spaceBetween: 2,
+        spaceBetween: 0,
         centerInsufficientSlides: true
     };
     hidden = false;

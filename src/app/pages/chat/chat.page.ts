@@ -45,30 +45,39 @@ export class ChatPage implements OnInit, ViewDidLeave, ViewDidEnter {
             const uid = value.get('uid');
             this.chatService.queryChat(uid).subscribe(chat => {
                 this.chat = chat;
-                this.loadPrevious(null);
-            }, () => {
-            }, () => {
-                this.scrollToBottom(0);
+                this.loadPrevious(null, () => setTimeout(() => this.scrollToBottom(0), 100));
             });
         });
     }
 
-    loadPrevious(event) {
+    loadPrevious(event, onComplete?) {
         this.ionScroll.disabled = true;
         const realMessageAmount = this.messages.filter(e => e.isLeft()).length;
         // for now we are sure that messages array is either empty or has date on top
-        this.chatService.queryReadChatMessages(this.chat.user.id, realMessageAmount)
-            .subscribe(value => {
-                this.addHistoryMessage(value);
-            }, () => {
-            }, () => {
-                if (this.messages.filter(e => e.isLeft()).length >= 20) {
-                    this.ionScroll.disabled = false;
-                }
-                if (event) {
-                    event.target.complete();
-                }
-            });
+        this.content.getScrollElement().then(scroll => {
+                const top = scroll.scrollHeight;
+                this.chatService.queryReadChatMessages(this.chat.user.id, realMessageAmount)
+                    .subscribe(value => {
+                        this.addHistoryMessage(value);
+                    }, () => {
+                    }, () => {
+                        if (this.messages.filter(e => e.isLeft()).length >= 20) {
+                            this.ionScroll.disabled = false;
+                        }
+                        if (onComplete) {
+                            onComplete();
+                        }
+                        if (event) {
+                            event.target.complete();
+                            setTimeout(() => {
+                                this.content.getScrollElement().then(e => {
+                                    this.content.scrollToPoint(undefined, e.scrollHeight - top, 0).then();
+                                });
+                            }, 0);
+                        }
+                    });
+            }
+        );
     }
 
     addHistoryMessage(value: Message) {

@@ -1,4 +1,4 @@
-<div *ngIf="users">
+<div *ngIf="users?.length">
     <ion-card *ngIf="!hidden">
         <ion-fab horizontal="end">
             <ion-fab-button (click)="hidden = true" color="transparent">
@@ -15,7 +15,7 @@
                                 <app-avatar [avatarUrl]="u.user.avatarUrl"></app-avatar>
                             </div>
                             <p>{{u.user.name}}</p>
-                            <p>{{u.depthOfConnection}}nd degree collection</p>
+                            <p>{{u.depthOfConnection}}nd degree</p>
                         </ion-card-content>
                     </ion-card>
                 </ion-slide>
